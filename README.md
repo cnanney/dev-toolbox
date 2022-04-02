@@ -1,8 +1,8 @@
 <p align="center"><img src="https://raw.githubusercontent.com/cnanney/developer-toolbox/master/docs/img/logo.svg" width="200" alt="Developer Toolbox"></p>
 
-# Developer Toolbox
+# Dev Toolbox
 
-Developer Toolbox provides quick offline access to various development tools.
+Dev Toolbox provides quick offline access to various development tools.
 
 Current tool set:
 
@@ -15,4 +15,4 @@ Current tool set:
 
 Runs entirely offline, and only requires local storage permission to remember the last tool used and its input.
 
-Currently available on Chrome, soon to be released on Firefox and Edge.
+Currently available on the Chrome Web Store, which can also be used to install in Edge. Firefox release coming soon-ish.
