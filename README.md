@@ -2,7 +2,7 @@
 
 # Dev Toolbox
 
-Dev Toolbox provides quick offline access to various development tools.
+Dev Toolbox is a browser extension that provides quick offline access to various development tools.
 
 Current tool set:
 
@@ -15,4 +15,14 @@ Current tool set:
 
 Runs entirely offline, and only requires local storage permission to remember the last tool used and its input.
 
-Currently available on the Chrome Web Store, which can also be used to install in Edge. Firefox release coming soon-ish.
+### Chrome
+
+Available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/dev-toolbox/amhnlknhjgbaeighicaghmebdmblfoah).
+
+### Edge
+
+Chrome extensions [can be installed as-is](https://support.microsoft.com/en-us/microsoft-edge/add-turn-off-or-remove-extensions-in-microsoft-edge-9c0ec68c-2fbc-2f2c-9ff0-bdc76f46b026#:~:text=Add%20an%20extension%20to%20Microsoft%20Edge%20from%20the%20Chrome%20Web%20Store) from the Chrome Web Store.
+
+### Firefox
+
+Firefox release coming soon-ish. 
