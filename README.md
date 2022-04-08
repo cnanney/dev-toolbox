@@ -15,8 +15,6 @@ Current tool set:
 
 Runs entirely offline, and only requires local storage permission to remember the last tool used and its input.
 
-<p align="center"><img src="https://raw.githubusercontent.com/cnanney/developer-toolbox/master/docs/img/time_split.png" alt="Screenshot"></p>
-
 # Browsers
 
 ### Chrome
@@ -30,3 +28,13 @@ Chrome extensions [can be installed as-is](https://support.microsoft.com/en-us/m
 ### Firefox
 
 Firefox release coming soon-ish. 
+
+# Screenshots
+
+<p align="center"><img src="https://raw.githubusercontent.com/cnanney/developer-toolbox/master/docs/img/hash-light.png" alt="Simple offline tools" title="Simple offline tools"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/cnanney/developer-toolbox/master/docs/img/time-dark.png" alt="Dark mode" title="Dark mode"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/cnanney/developer-toolbox/master/docs/img/emoji-light.png" alt="Instant emoji search" title="Instant emoji search"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/cnanney/developer-toolbox/master/docs/img/emoji-modal-dark.png" alt="Emoji details and quick copy" title="Emoji details and quick copy"></p>
