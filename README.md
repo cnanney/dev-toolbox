@@ -15,6 +15,10 @@ Current tool set:
 
 Runs entirely offline, and only requires local storage permission to remember the last tool used and its input.
 
+<p align="center"><img src="https://raw.githubusercontent.com/cnanney/developer-toolbox/master/docs/img/time_split.png" alt="Screenshot"></p>
+
+# Browsers
+
 ### Chrome
 
 Available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/dev-toolbox/amhnlknhjgbaeighicaghmebdmblfoah).
