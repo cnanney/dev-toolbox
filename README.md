@@ -27,7 +27,11 @@ Chrome extensions [can be installed as-is](https://support.microsoft.com/en-us/m
 
 ### Firefox
 
-Firefox release coming soon-ish. 
+Available from [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/dev-toolbox/).
+
+Differences in Firefox:
+
+* Emoji "Copy as PNG" button not available due to lack of support (by default) for [ClipboardItem](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardItem).
 
 # Screenshots
 
