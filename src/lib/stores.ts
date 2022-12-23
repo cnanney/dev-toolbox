@@ -18,4 +18,4 @@ export const elapsed = derived(
     ($time: Date) => Math.round(($time.valueOf() - start.valueOf()) / 1000)
 )
 
-export const clickCount: Writable<number> = writable(0)
+export const hashInput: Writable<string> = writable('')
