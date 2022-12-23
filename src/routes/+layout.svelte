@@ -1,5 +1,7 @@
 <script>
-    import "../app.css";
+    import "../app.css"
 </script>
 
-<slot />
+<div class="wdt flex flex-col m-auto bg-white dark:bg-gray-700">
+    <slot/>
+</div>
