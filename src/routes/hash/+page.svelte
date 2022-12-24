@@ -1,7 +1,7 @@
 <script lang="ts">
     import {hash} from '$lib/methods'
     import {hashInput} from '$lib/stores'
-    import CalcResult from '$lib/components/CalcResult.svelte'
+    import CalcOutput from '$lib/components/CalcOutput.svelte'
     import CalcInput from '$lib/components/CalcInput.svelte'
 
     const rows = [
@@ -69,4 +69,4 @@
 </script>
 
 <CalcInput id="hashInput" label="Text to Hash" inputStore={hashInput}/>
-<CalcResult input={$hashInput} rows={rows}/>
+<CalcOutput inputStore={hashInput} rows={rows}/>

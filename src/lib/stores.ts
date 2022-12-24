@@ -19,3 +19,4 @@ export const elapsed = derived(
 )
 
 export const hashInput: Writable<string> = writable('')
+export const encodeInput: Writable<string> = writable('')
