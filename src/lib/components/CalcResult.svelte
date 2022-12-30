@@ -9,6 +9,14 @@
     function sendToInput() {
         inputStore.set(result)
     }
+
+    function copyToClipboard(event: Event) {
+        const textarea = (event.target as HTMLElement)
+            .closest('div.segment')
+            .querySelector('textarea') as HTMLTextAreaElement
+        textarea.select()
+        document.execCommand('copy')
+    }
 </script>
 
 <div class="segment">
@@ -29,7 +37,8 @@
                     </svg>
                 </div>
             {/if}
-            <div class="ml-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
+            <div on:click={copyToClipboard}
+                 class="ml-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
                  title="Copy to clipboard">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none"
                      viewBox="0 0 24 24"
