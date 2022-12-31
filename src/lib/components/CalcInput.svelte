@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="mt-1">
-            <textarea id="wdtInput" bind:value={$inputValueStore} rows={inputRows} autofocus></textarea>
+            <textarea id="wdtInput" bind:value={$inputValueStore} rows={inputRows}></textarea>
         </div>
     </div>
 </div>

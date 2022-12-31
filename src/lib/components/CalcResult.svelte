@@ -59,5 +59,5 @@
             </div>
         </div>
     </div>
-    <textarea class="leading-none {!isFirefox ? 'py-2 px-3' : 'p-2'}" rows={calc.size} readonly>{result}</textarea>
+    <textarea class="{!isFirefox ? 'py-2 px-3' : 'p-2'}" rows={calc.size} readonly>{result}</textarea>
 </div>

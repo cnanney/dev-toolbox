@@ -1,18 +1,22 @@
 <script>
     import '../app.css'
-    import {resizeTypeSelectorIfPresent, runningAsExtension, waitForFonts} from '$lib/util'
+    import {focusInput, resizeTypeSelectorIfPresent, runningAsExtension, waitForFonts} from '$lib/util'
     import Nav from '$lib/components/Nav.svelte'
     import {afterNavigate} from '$app/navigation'
+    import {onMount, tick} from 'svelte'
 
-    import {onMount} from 'svelte'
+    function onLoad() {
+        resizeTypeSelectorIfPresent()
+        setTimeout(focusInput, 20)
+    }
 
     onMount(() => {
-        waitForFonts().then(resizeTypeSelectorIfPresent)
+        waitForFonts().then(onLoad)
         console.log('onMount')
     })
 
     afterNavigate(() => {
-        resizeTypeSelectorIfPresent()
+        tick().then(onLoad)
         console.log('afterNavigate')
     })
 </script>
