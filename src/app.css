@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+select {
+    background-position: right 0.1rem center;
+}
+
+.dark select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='rgba(156, 163, 175)' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
 .wdt {
     width: 650px;
 }
@@ -20,10 +28,6 @@
     dark:focus:ring-opacity-70 dark:focus:border-opacity-70
     scrollbar-thin scrollbar-thumb-gray-300 bg-white dark:bg-gray-700
     overflow-x-hidden;
-}
-
-.dark .wdt-input select.input-select {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='rgba(156, 163, 175)' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
 }
 
 .wdt-output textarea {

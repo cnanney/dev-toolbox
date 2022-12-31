@@ -2,10 +2,10 @@
     import type {Writable} from 'svelte/store'
     import {focusInput} from '$lib/util'
 
-    export let inputStore: Writable<string>
+    export let inputValueStore: Writable<string>
 
     const clearInput = () => {
-        inputStore.set('')
+        inputValueStore.set('')
         focusInput()
     }
 </script>

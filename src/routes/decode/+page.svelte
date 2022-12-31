@@ -1,26 +1,26 @@
 <script lang="ts">
-    import {encode} from '$lib/methods'
-    import {encodeInput} from '$lib/stores'
+    import {decode} from '$lib/methods'
+    import {decodeInput} from '$lib/stores'
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import CalcInput from '$lib/components/CalcInput.svelte'
 
-    const inputLabel = 'Text to Encode'
+    const inputLabel = 'Text to Decode'
     const inputRows = 2
-    const inputValueStore = encodeInput
+    const inputValueStore = decodeInput
     const outputRows = [
         {
             cols: [
-                {title: 'URI Encoded', size: 4, method: encode.uri, send: false},
+                {title: 'URI Decoded', size: 4, method: decode.uri, send: false},
             ],
         },
         {
             cols: [
-                {title: 'HTML Encoded', size: 4, method: encode.html, send: false},
+                {title: 'HTML Decoded', size: 4, method: decode.html, send: false},
             ],
         },
         {
             cols: [
-                {title: 'BASE-64 Encoded', size: 4, method: encode.base64, send: false},
+                {title: 'BASE-64 Decoded', size: 4, method: decode.base64, send: false},
             ],
         },
     ]

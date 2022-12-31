@@ -20,3 +20,6 @@ export const elapsed = derived(
 
 export const hashInput: Writable<string> = writable('')
 export const encodeInput: Writable<string> = writable('')
+export const decodeInput: Writable<string> = writable('')
+export const numberInput: Writable<string> = writable('')
+export const numberInputType: Writable<string> = writable('10')

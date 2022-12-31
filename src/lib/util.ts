@@ -12,10 +12,13 @@ export const runningAsExtension: boolean = !(
     || !chrome.runtime
     || !chrome.runtime.id
 )
-export const getInput = () => document.querySelector('.wdt-input textarea') as HTMLElement | null
+export const hasClipboardItem: boolean = typeof ClipboardItem !== 'undefined'
+export const getWdtElement = () => document.querySelector('.wdt') as HTMLElement
+export const getInput = () => document.getElementById('wdtInput') as HTMLTextAreaElement
 export const focusInput = (): void => getInput()?.focus()
+export const waitForFonts = async (): Promise<FontFaceSet> => await document.fonts.ready
 
-export function resizeTypeSelector() {
+export function resizeTypeSelectorIfPresent() {
     // https://stackoverflow.com/a/67240166/409179
     let target = document.querySelector('.wdt-input select') as HTMLSelectElement
     if (!target) return
@@ -33,6 +36,30 @@ export function resizeTypeSelector() {
     tempSelect.remove()
 }
 
+export async function createPopoutWindow(href: string | null = null) {
+    if (!runningAsExtension) return
+
+    if (href === null) {
+        href = chrome.runtime.getURL('index.html')
+    }
+
+    const rect = getWdtElement().getBoundingClientRect()
+    const [initialW, initialH] = [rect.width + 30, rect.height + 50]
+
+    if (isFirefox) {
+        window.open(href, 'devToolboxPopout', `resizable,width=${initialW},height=${initialH}`)
+    } else {
+        await chrome.windows.create({
+            url: href,
+            type: 'popup',
+            width: initialW,
+            height: initialH,
+        })
+    }
+
+    window.close()
+}
+
 export function b64(input: any, method = 'encode'): string {
     try {
         return method === 'encode'
@@ -43,7 +70,7 @@ export function b64(input: any, method = 'encode'): string {
     }
 }
 
-export function toBase(input: number, base: number, pad: number | null = null): string {
+export function toBase(input: string, base: number, pad: number | null = null): string {
     try {
         let string = BigInt(input).toString(base)
         return pad ? string.padStart(pad, '0') : string

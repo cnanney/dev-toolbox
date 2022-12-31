@@ -1,13 +1,19 @@
 <script lang="ts">
-    import {isFirefox, runCalc} from '$lib/util'
-    import type {CalcResult} from '$lib/types'
+    import {isFirefox, resizeTypeSelectorIfPresent, runCalc} from '$lib/util'
+    import type {CalcResult, PreCalcInput} from '$lib/types'
+    import {tick} from 'svelte'
 
-    export let output: CalcResult, inputStore
+    export let calc: CalcResult, inputValueStore, inputTypeStore, preCalc: PreCalcInput | null
 
-    $: result = runCalc(output.method, $inputStore)
+    $: calcInput = preCalc ? preCalc($inputValueStore, $inputTypeStore) : $inputValueStore
+    $: result = runCalc(calc.method, calcInput)
 
     function sendToInput() {
-        inputStore.set(result)
+        if (calc.sendInputType) {
+            inputTypeStore.set(calc.sendInputType)
+            tick().then(resizeTypeSelectorIfPresent)
+        }
+        inputValueStore.set(result)
     }
 
     function copyToClipboard(event: Event) {
@@ -22,10 +28,10 @@
 <div class="segment">
     <div class="flex items-center">
         <div class="text-sm font-semibold text-gray-500 dark:text-gray-300">
-            {output.title}
+            {calc.title}
         </div>
         <div class="ml-auto flex text-gray-400 dark:text-gray-400">
-            {#if output.send ?? true}
+            {#if calc.send ?? true}
                 <div on:click={sendToInput}
                      class="cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
                      title="Send to input">
@@ -49,5 +55,5 @@
             </div>
         </div>
     </div>
-    <textarea class={!isFirefox ? 'py-2 px-3' : 'p-2'} rows={output.size} readonly>{result}</textarea>
+    <textarea class={!isFirefox ? 'py-2 px-3' : 'p-2'} rows={calc.size} readonly>{result}</textarea>
 </div>
