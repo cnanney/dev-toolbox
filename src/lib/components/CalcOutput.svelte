@@ -1,12 +1,13 @@
 <script lang="ts">
     import {isFirefox} from '$lib/util'
     import CalcResult from '$lib/components/CalcResult.svelte'
-    import {PreCalcCallback} from '$lib/types'
+    import type {PreCalcCallback} from '$lib/types'
+    import type {Writable} from 'svelte/store'
 
-    export let outputRows
-        , inputValueStore
-        , inputTypeStore = null
-        , preCalc: PreCalcCallback | null = null
+    export let outputRows: object[],
+        inputValueStore: Writable<any>,
+        inputTypeStore: Writable<any> | null = null,
+        preCalc: PreCalcCallback | null = null
 </script>
 
 <div class="wdt-output {isFirefox ? 'pb-4' : 'pb-3'}">

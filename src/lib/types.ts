@@ -1,7 +1,10 @@
+import type {DateTime} from 'luxon'
+
 export type HashInput = string
 export type EncodeInput = string
 export type DecodeInput = string
 export type NumberInput = string
+export type TimeInput = DateTime | null;
 
 export type PreCalcCallback = (input: any, type: string | null) => any
 

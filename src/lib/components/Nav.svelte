@@ -24,7 +24,23 @@
             href: '/number',
             name: 'Number',
 
+        },
+        {
+            id: 'time',
+            href: '/time',
+            name: 'Time',
+
         }
+        // {
+        //     id: 'net',
+        //     href: '/net',
+        //     name: 'Net',
+        // },
+        // {
+        //     id: 'emoji',
+        //     href: '/emoji',
+        //     name: 'Emoji',
+        // },
     ]
 </script>
 

@@ -5,8 +5,9 @@ import sha256 from 'crypto-js/sha256'
 import sha512 from 'crypto-js/sha512'
 import sha3 from 'crypto-js/sha3'
 import {escape, unescape} from 'lodash-es'
-import type {DecodeInput, EncodeInput, HashInput, NumberInput} from '$lib/types'
+import type {DecodeInput, EncodeInput, HashInput, NumberInput, TimeInput} from '$lib/types'
 import {b64, toBase} from '$lib/util'
+import {DateTime} from 'luxon'
 
 export const hash = {
     md5: (input: HashInput) => md5(input).toString(),
@@ -37,3 +38,15 @@ export const number = {
     hex: (input: NumberInput) => toBase(input, 16),
 }
 
+export const time = {
+    unix_sec: (input: TimeInput) => Math.floor(input?.toSeconds() || 0) || '',
+    unix_milli: (input: TimeInput) => input?.toMillis() || '',
+    iso: (input: TimeInput) => input?.toISO({suppressMilliseconds: true}) || '',
+    iso_date: (input: TimeInput) => input?.toISODate() || '',
+    iso_time: (input: TimeInput) => input?.toISOTime({suppressMilliseconds: true}) || '',
+    iso_week: (input: TimeInput) => input?.toISOWeekDate() || '',
+    sql: (input: TimeInput) => input?.toSQL({includeOffset: false}).replace(/\.000$/, '') || '',
+    http: (input: TimeInput) => input?.toHTTP() || '',
+    local: (input: TimeInput) => input?.toLocal().toISO({suppressMilliseconds: true}) || '',
+    full: (input: TimeInput) => input?.toLocal().toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS) || '',
+}
