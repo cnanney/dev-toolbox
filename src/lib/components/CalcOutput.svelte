@@ -1,14 +1,12 @@
 <script lang="ts">
     import {isFirefox} from '$lib/util'
     import CalcResult from '$lib/components/CalcResult.svelte'
-    import {afterNavigate} from '$app/navigation'
-    import {page} from '$app/stores'
+    import {PreCalcCallback} from '$lib/types'
 
-    export let outputRows,
-        inputValueStore, 
-        inputTypeStore, 
-        preCalc = null
-    
+    export let outputRows
+        , inputValueStore
+        , inputTypeStore = null
+        , preCalc: PreCalcCallback | null = null
 </script>
 
 <div class="wdt-output {isFirefox ? 'pb-4' : 'pb-3'}">
@@ -16,8 +14,8 @@
         {#each outputRows as row, i}
             <div class="grid gap-y-2 gap-x-5
                 {['', 'grid-cols-1', 'grid-cols-2', 'grid-cols-3'][row.cols.length]}
-                {outputRows.length > i + 1 && 'mb-1'}
-                {row.border && 'border-b pb-3 mb-3 border-gray-100 dark:border-gray-600'}"
+                {outputRows.length > i + 1 ? 'mb-1' : ''}
+                {row.border ? 'border-b pb-3 mb-3 border-gray-100 dark:border-gray-600' : ''}"
             >
                 {#each row.cols as col}
                     <CalcResult {...{inputValueStore, inputTypeStore, preCalc}} calc={col}/>

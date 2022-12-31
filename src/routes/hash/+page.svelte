@@ -7,7 +7,6 @@
     const inputLabel = 'Text to Hash'
     const inputRows = 2
     const inputValueStore = hashInput
-
     const outputRows = [
         {
             cols: [

@@ -1,9 +1,12 @@
 <script lang="ts">
     import {isFirefox, resizeTypeSelectorIfPresent, runCalc} from '$lib/util'
-    import type {CalcResult, PreCalcInput} from '$lib/types'
+    import type {CalcResult, PreCalcCallback} from '$lib/types'
     import {tick} from 'svelte'
 
-    export let calc: CalcResult, inputValueStore, inputTypeStore, preCalc: PreCalcInput | null
+    export let calc: CalcResult
+        , inputValueStore
+        , inputTypeStore
+        , preCalc: PreCalcCallback | null
 
     $: calcInput = preCalc ? preCalc($inputValueStore, $inputTypeStore) : $inputValueStore
     $: result = runCalc(calc.method, calcInput)
