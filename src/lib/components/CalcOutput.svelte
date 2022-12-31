@@ -14,7 +14,7 @@
         {#each outputRows as row, i}
             <div class="grid gap-y-2 gap-x-5
                 {['', 'grid-cols-1', 'grid-cols-2', 'grid-cols-3'][row.cols.length]}
-                {outputRows.length > i + 1 ? 'mb-3' : ''}
+                {outputRows.length > i + 1 ? 'mb-2.5' : ''}
                 {row.border ? 'border-b pb-4 border-gray-100 dark:border-gray-600' : ''}"
             >
                 {#each row.cols as col}

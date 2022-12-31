@@ -53,7 +53,7 @@
                         {#each nav as route}
                             <a href="{route.href}" data-sveltekit-preload-data="off"
                                class="text-gray-900 dark:text-gray-200 rounded-md py-2 px-3
-                                {$page.route.id === route.href
+                                {$page.route?.id === route.href
                                 ? 'bg-gray-100 dark:bg-gray-800'
                                 : 'hover:bg-gray-50 dark:hover:bg-gray-800'}"
                             >{route.name}</a>

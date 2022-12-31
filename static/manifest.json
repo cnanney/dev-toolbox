@@ -1,0 +1,14 @@
+{
+  "name": "Test Svelte Extension",
+  "description": "A browser extension made with Svelte Kit",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_title": "Test Svelte Extension",
+    "default_icon": "favicon.png",
+    "default_popup": "index.html"
+  }
+}
