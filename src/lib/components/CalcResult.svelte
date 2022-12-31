@@ -2,17 +2,18 @@
     import {isFirefox, resizeTypeSelectorIfPresent, runCalc} from '$lib/util'
     import type {CalcResult, PreCalcCallback} from '$lib/types'
     import {tick} from 'svelte'
+    import type {Writable} from 'svelte/store'
 
-    export let calc: CalcResult
-        , inputValueStore
-        , inputTypeStore
-        , preCalc: PreCalcCallback | null
+    export let calc: CalcResult,
+        inputValueStore: Writable<string>,
+        inputTypeStore: Writable<string> | null,
+        preCalc: PreCalcCallback | null
 
-    $: calcInput = preCalc ? preCalc($inputValueStore, $inputTypeStore) : $inputValueStore
+    $: calcInput = (preCalc) ? preCalc($inputValueStore, $inputTypeStore!) : $inputValueStore
     $: result = runCalc(calc.method, calcInput)
 
     function sendToInput() {
-        if (calc.sendInputType) {
+        if (calc.sendInputType && inputTypeStore) {
             inputTypeStore.set(calc.sendInputType)
             tick().then(resizeTypeSelectorIfPresent)
         }
@@ -58,5 +59,5 @@
             </div>
         </div>
     </div>
-    <textarea class={!isFirefox ? 'py-2 px-3' : 'p-2'} rows={calc.size} readonly>{result}</textarea>
+    <textarea class="leading-none {!isFirefox ? 'py-2 px-3' : 'p-2'}" rows={calc.size} readonly>{result}</textarea>
 </div>

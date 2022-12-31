@@ -30,12 +30,12 @@
             href: '/time',
             name: 'Time',
 
-        }
-        // {
-        //     id: 'net',
-        //     href: '/net',
-        //     name: 'Net',
-        // },
+        },
+        {
+            id: 'net',
+            href: '/net',
+            name: 'Net',
+        },
         // {
         //     id: 'emoji',
         //     href: '/emoji',

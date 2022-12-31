@@ -31,7 +31,7 @@ select {
 }
 
 .wdt-output textarea {
-    @apply w-full text-xxs font-mono mt-1 border-0 resize-none break-all shadow-sm
+    @apply block w-full text-xxs font-mono mt-1 border-0 resize-none break-all shadow-sm
     bg-gray-50 dark:bg-gray-600 dark:text-gray-200 focus:ring-0 focus:border-black
     scrollbar scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-500
     overflow-x-hidden;
