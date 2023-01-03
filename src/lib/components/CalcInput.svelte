@@ -34,8 +34,7 @@
                     <div class="flex space-x-1 text-xs text-blue-800 dark:text-blue-400">
                         {#each inputModifiers as mod, i}
                             {#if mod.callback}
-                                <button class="hover:underline"
-                                        on:click={mod.callback}
+                                <button class="hover:underline" on:click={mod.callback}
                                 >{mod.text}</button>{mod.separator ?? ''}
                             {:else}
                                 <span class="text-gray-500 dark:text-gray-300">{mod.text}</span>

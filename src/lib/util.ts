@@ -18,6 +18,21 @@ export const getInput = () => document.getElementById('wdtInput') as HTMLTextAre
 export const focusInput = (): void => getInput()?.focus()
 export const waitForFonts = async (): Promise<FontFaceSet> => await document.fonts.ready
 
+export function classMap(classArray: (string | { [k: string]: any })[]): string {
+    const classes: string[] = []
+    classArray.forEach(el => {
+        classes.push(typeof el === 'string'
+            ? el
+            : Object.entries(el)
+                .filter(([name, value]) => name !== '' && value)
+                .map(([name]) => name)
+                .join(' ')
+        )
+    })
+
+    return classes.join(' ')
+}
+
 export function resizeTypeSelectorIfPresent() {
     // https://stackoverflow.com/a/67240166/409179
     let target = document.querySelector('.wdt-input select') as HTMLSelectElement

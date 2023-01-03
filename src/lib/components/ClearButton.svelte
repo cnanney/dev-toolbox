@@ -4,7 +4,7 @@
 
     export let inputValueStore: Writable<string>
 
-    const clearInput = () => {
+    function clearInput() {
         inputValueStore.set('')
         focusInput()
     }

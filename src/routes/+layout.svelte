@@ -4,6 +4,7 @@
     import Nav from '$lib/components/Nav.svelte'
     import {afterNavigate} from '$app/navigation'
     import {onMount, tick} from 'svelte'
+    import {classMap} from '$lib/util'
 
     function onLoad() {
         resizeTypeSelectorIfPresent()
@@ -21,10 +22,9 @@
     })
 </script>
 
-<div class="
-    wdt flex flex-col m-auto bg-white dark:bg-gray-700
-    {!runningAsExtension && 'border dark:border-gray-900 mt-5'}"
->
+<div class={classMap(['wdt flex flex-col m-auto bg-white dark:bg-gray-700',
+    {'border dark:border-gray-900 mt-5': !runningAsExtension}
+])}>
     <Nav/>
     <slot/>
 </div>
