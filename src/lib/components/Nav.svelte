@@ -36,11 +36,11 @@
             href: '/net',
             name: 'Net',
         },
-        // {
-        //     id: 'emoji',
-        //     href: '/emoji',
-        //     name: 'Emoji',
-        // },
+        {
+            id: 'emoji',
+            href: '/emoji',
+            name: 'Emoji',
+        },
     ]
 </script>
 
