@@ -7,7 +7,7 @@
     import {Netmask} from 'netmask'
 
     const inputLabel = 'IPv4 / CIDR / Decimal'
-    const inputRows = 1
+    const inputSize = 1
     const inputValueStore = netInput
 
     const preCalc: PreCalcCallback = (value): NetInput => {
@@ -52,7 +52,7 @@
 <CalcInput {...{
     inputLabel,
     inputValueStore,
-    inputRows,
+    inputSize,
 }}/>
 <CalcOutput {...{
     outputRows,

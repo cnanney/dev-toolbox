@@ -5,7 +5,7 @@
     import CalcInput from '$lib/components/CalcInput.svelte'
 
     const inputLabel = 'Text to Hash'
-    const inputRows = 2
+    const inputSize = 2
     const inputValueStore = hashInput
     const outputRows = [
         {
@@ -46,7 +46,7 @@
 <CalcInput {...{
     inputLabel,
     inputValueStore,
-    inputRows,
+    inputSize,
 }}/>
 <CalcOutput {...{
     outputRows,

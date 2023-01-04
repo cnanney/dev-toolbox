@@ -5,7 +5,7 @@
     import CalcInput from '$lib/components/CalcInput.svelte'
 
     const inputLabel = 'Text to Decode'
-    const inputRows = 2
+    const inputSize = 2
     const inputValueStore = decodeInput
     const outputRows = [
         {
@@ -30,7 +30,7 @@
 <CalcInput {...{
     inputLabel,
     inputValueStore,
-    inputRows,
+    inputSize,
 }}/>
 <CalcOutput {...{
     outputRows,

@@ -6,7 +6,7 @@
     export let inputLabel: string,
         inputValueStore: Writable<any>,
         inputTypeStore: Writable<any> | null = null,
-        inputRows: number = 2,
+        inputSize: number = 2,
         inputOptions: object[] | null = null,
         inputModifiers: object[] | null = null
 </script>
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="mt-1">
-            <textarea id="wdtInput" bind:value={$inputValueStore} rows={inputRows}></textarea>
+            <textarea id="wdtInput" bind:value={$inputValueStore} rows={inputSize}></textarea>
         </div>
     </div>
 </div>

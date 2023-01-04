@@ -5,7 +5,7 @@
     import CalcInput from '$lib/components/CalcInput.svelte'
     
     const inputLabel = 'Number in'
-    const inputRows = 1
+    const inputSize = 1
     const inputTypeStore = numberInputType
     const inputValueStore = numberInput
     const inputOptions = [
@@ -63,7 +63,7 @@
 <CalcInput {...{
     inputLabel,
     inputValueStore,
-    inputRows,
+    inputSize,
     inputTypeStore,
     inputOptions,
 }}/>

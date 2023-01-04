@@ -26,7 +26,7 @@
     }
 
     const inputLabel = 'Time in'
-    const inputRows = 1
+    const inputSize = 1
     const inputTypeStore = timeInputType
     const inputValueStore = timeInput
     const inputOptions = [
@@ -140,7 +140,7 @@
 <CalcInput {...{
     inputLabel,
     inputValueStore,
-    inputRows,
+    inputSize,
     inputTypeStore,
     inputOptions,
     inputModifiers,
