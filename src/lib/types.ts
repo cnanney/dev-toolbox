@@ -17,3 +17,11 @@ export type CalcResult = {
     send?: boolean,
     sendInputType?: string
 }
+
+export type Emoji = {
+    qc: string[], // qualified codes
+    n: string, // name
+    g: number, // group
+    sg: number, // sub group
+    gh: string[]
+}

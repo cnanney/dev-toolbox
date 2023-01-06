@@ -103,3 +103,9 @@ export function runCalc(fn: (input: any) => string, value: any): string {
         return ''
     }
 }
+
+export function* chunkify(arr: any[], n: number) {
+    for (let i = 0; i < arr.length; i += n) {
+        yield arr.slice(i, i + n)
+    }
+}    
