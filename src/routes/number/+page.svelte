@@ -1,9 +1,9 @@
 <script lang="ts">
-    import {number} from '$lib/methods'
-    import {numberInput, numberInputType} from '$lib/stores'
+    import { number } from '$lib/methods'
+    import { numberInput, numberInputType } from '$lib/stores'
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import CalcInput from '$lib/components/CalcInput.svelte'
-    
+
     const inputLabel = 'Number in'
     const inputSize = 1
     const inputTypeStore = numberInputType

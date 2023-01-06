@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type {Writable} from 'svelte/store'
-    import {focusInput} from '$lib/util'
+    import type { Writable } from 'svelte/store'
+    import { focusInput } from '$lib/util'
 
     export let inputValueStore: Writable<string>
 

@@ -1,10 +1,10 @@
 <script lang="ts">
-    import {net} from '$lib/methods'
-    import {netInput} from '$lib/stores'
+    import { net } from '$lib/methods'
+    import { netInput } from '$lib/stores'
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import CalcInput from '$lib/components/CalcInput.svelte'
-    import type {NetInput, PreCalcCallback} from '$lib/types'
-    import {Netmask} from 'netmask'
+    import type { NetInput, PreCalcCallback } from '$lib/types'
+    import { Netmask } from 'netmask'
 
     const inputLabel = 'IPv4 / CIDR / Decimal'
     const inputSize = 1

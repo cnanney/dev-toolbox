@@ -1,5 +1,5 @@
-import type {DateTime} from 'luxon'
-import type {Netmask} from 'netmask'
+import type { DateTime } from 'luxon'
+import type { Netmask } from 'netmask'
 
 export type HashInput = string
 export type EncodeInput = string

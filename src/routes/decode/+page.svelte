@@ -1,6 +1,6 @@
 <script lang="ts">
-    import {decode} from '$lib/methods'
-    import {decodeInput} from '$lib/stores'
+    import { decode } from '$lib/methods'
+    import { decodeInput } from '$lib/stores'
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import CalcInput from '$lib/components/CalcInput.svelte'
 

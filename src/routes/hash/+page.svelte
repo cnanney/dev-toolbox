@@ -1,6 +1,6 @@
 <script lang="ts">
-    import {hash} from '$lib/methods'
-    import {hashInput} from '$lib/stores'
+    import { hash } from '$lib/methods'
+    import { hashInput } from '$lib/stores'
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import CalcInput from '$lib/components/CalcInput.svelte'
 

@@ -1,8 +1,8 @@
 <script lang="ts">
     import CalcResult from '$lib/components/CalcResult.svelte'
-    import type {PreCalcCallback} from '$lib/types'
-    import type {Writable} from 'svelte/store'
-    import {classMap} from '$lib/util.js'
+    import type { PreCalcCallback } from '$lib/types'
+    import type { Writable } from 'svelte/store'
+    import { classMap } from '$lib/util.js'
 
     export let outputRows: object[],
         inputValueStore: Writable<string>,

@@ -1,7 +1,7 @@
 <script lang="ts">
     import ClearButton from '$lib/components/ClearButton.svelte'
-    import {resizeTypeSelectorIfPresent} from '$lib/util'
-    import type {Writable} from 'svelte/store'
+    import { resizeTypeSelectorIfPresent } from '$lib/util'
+    import type { Writable } from 'svelte/store'
 
     export let inputLabel: string,
         inputValueStore: Writable<any>,

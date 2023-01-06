@@ -1,10 +1,10 @@
 <script>
     import '../app.css'
-    import {focusInput, resizeTypeSelectorIfPresent, runningAsExtension, waitForFonts} from '$lib/util'
+    import { focusInput, resizeTypeSelectorIfPresent, runningAsExtension, waitForFonts } from '$lib/util'
     import Nav from '$lib/components/Nav.svelte'
-    import {afterNavigate} from '$app/navigation'
-    import {onMount, tick} from 'svelte'
-    import {classMap} from '$lib/util'
+    import { afterNavigate } from '$app/navigation'
+    import { onMount, tick } from 'svelte'
+    import { classMap } from '$lib/util'
 
     function onLoad() {
         resizeTypeSelectorIfPresent()
