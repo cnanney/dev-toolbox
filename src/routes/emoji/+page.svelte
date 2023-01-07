@@ -1,22 +1,27 @@
 <script lang="ts">
-    import allEmoji from '$lib/data/emoji-with-gh.json'
+    import allEmojiList from '$lib/data/emoji-with-gh.json'
     import { emojiInput, emojiGhOnly } from '$lib/stores'
     import CalcInput from '$lib/components/CalcInput.svelte'
     import Fuse from 'fuse.js'
     import EmojiCell from '$lib/components/EmojiCell.svelte'
     import throttle from 'lodash-es/throttle'
     import type { Emoji } from '$lib/types'
-    import { chunkify } from '$lib/util'
+    import { chunkify, scrollToTopById } from '$lib/util'
+    import { onDestroy, onMount } from 'svelte'
+    import { browser } from '$app/environment'
+    import type { Unsubscriber } from 'svelte/store'
 
     let dataset: Emoji[],
         searchResults: Emoji[],
         resultChunks: [Emoji[]],
-        resultSet: Emoji[],
-        visibleEmoji: Emoji[],
+        resultSet: Emoji[] = [],
+        visibleEmoji: Emoji[] = [],
         chunkIndex: number = 1,
-        fuse: Fuse<Emoji>
+        fuse: Fuse<Emoji>,
+        emojiInputUnsub: Unsubscriber,
+        emojiGhOnlyUnsub: Unsubscriber
 
-    const ghOnlyEmoji = allEmoji.filter((el: Emoji) => el.gh.length)
+    const ghOnlyEmojiList = allEmojiList.filter((el: Emoji) => el.gh.length)
     const chunkSize = 50
     const fuseOptions = {
         keys: ['n'],
@@ -25,18 +30,6 @@
         ignoreLocation: true,
         useExtendedSearch: true,
     }
-
-    $: dataset = $emojiGhOnly ? ghOnlyEmoji : allEmoji
-    $: fuse = new Fuse(dataset, fuseOptions)
-    $: searchResults = fuse.search($emojiInput).map(r => r.item)
-    $: resultSet = $emojiInput ? searchResults : dataset
-    $: resultChunks = [...chunkify(resultSet, chunkSize)] as [Emoji[]]
-    $: visibleEmoji = [...resultChunks[0]]
-
-    const inputLabel = 'Emoji Search'
-    const inputSize = 1
-    const inputValueStore = emojiInput
-
     const handleScroll = throttle((e) => {
         let toEnd = e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight)
         if (toEnd < 400) {
@@ -45,13 +38,50 @@
             }
         }
     }, 50)
+    
+    function initDataset(){
+        dataset = $emojiGhOnly ? ghOnlyEmojiList : allEmojiList
+        fuse = new Fuse(dataset, fuseOptions)
+        doSearch()
+    }
+    
+    function doSearch(){
+        searchResults = fuse.search($emojiInput).map(r => r.item)
+        resultSet = $emojiInput ? searchResults : dataset
+        resultChunks = [...chunkify(resultSet, chunkSize)] as [Emoji[]]
+        visibleEmoji = [...resultChunks[0]]
+        chunkIndex = 1
+        scrollToTopById('emojis')
+    }
 
+    onMount(() => {
+        initDataset()
+        emojiGhOnlyUnsub = emojiGhOnly.subscribe(() => initDataset())
+        emojiInputUnsub = emojiInput.subscribe(() => doSearch())
+    })
+    onDestroy(() => {
+        if (!browser) return
+        emojiInputUnsub()
+        emojiGhOnlyUnsub()
+    })
+
+    const inputLabel = 'Emoji Search'
+    const inputSize = 1
+    const inputValueStore = emojiInput
+    const inputToggles = [
+        {
+            text: 'GitHub Only',
+            checked: $emojiGhOnly,
+            callback: () => emojiGhOnly.update(val => !val),
+        },
+    ]
 </script>
 
 <CalcInput {...{
     inputLabel,
     inputValueStore,
     inputSize,
+    inputToggles
 }}/>
 
 <div class="wdt-output">

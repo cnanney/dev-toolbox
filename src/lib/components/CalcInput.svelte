@@ -8,7 +8,8 @@
         inputTypeStore: Writable<any> | null = null,
         inputSize: number = 2,
         inputOptions: object[] | null = null,
-        inputModifiers: object[] | null = null
+        inputModifiers: object[] | null = null,
+        inputToggles: object[] | null = null
 </script>
 
 <div class="wdt-input">
@@ -41,6 +42,15 @@
                             {/if}
                         {/each}
                     </div>
+                {/if}
+                {#if inputToggles}
+                    {#each inputToggles as tog, i}
+                        <label class="inline-flex items-center text-xs">
+                            <input type="checkbox" class="gh-checkbox" bind:checked={tog.checked}
+                                   on:change={tog.callback}>
+                            <span class="ml-2 text-gray-700 dark:text-gray-300">{tog.text}</span>
+                        </label>
+                    {/each}
                 {/if}
                 <ClearButton {inputValueStore}/>
             </div>

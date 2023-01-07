@@ -108,4 +108,9 @@ export function* chunkify(arr: any[], n: number) {
     for (let i = 0; i < arr.length; i += n) {
         yield arr.slice(i, i + n)
     }
-}    
+}
+
+export function scrollToTopById(id: string) {
+    let eDiv = document.getElementById(id)
+    if (eDiv) eDiv.scrollTop = 0
+}

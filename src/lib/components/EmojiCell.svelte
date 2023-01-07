@@ -15,7 +15,7 @@
         ).join('_')
     }
     export const getPngPath = (emoji: Emoji) => `/emoji-png/${getPngName(emoji)}.png`
-    export const getGithubCodes = (emoji: Emoji) => emoji.gh.map(name => `:${name}:`).join(' ')
+    export const getGithubCodes = (emoji: Emoji) => emoji.gh.map(name => `:${name}:`).join("\n")
     export const getHtml = (emoji: Emoji) => emoji.qc.map((c) => `&#x${c};`).join('')
 
     function highlightedName(searchString: string) {
