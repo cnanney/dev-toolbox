@@ -1,0 +1,84 @@
+<script lang="ts">
+    import type { Emoji } from '$lib/types'
+    import categories from '$lib/data/emoji-category-map.json'
+    import { emojiDisplayHtmlChars, emojiGhCodes, emojiHtmlChars, emojiPngPath } from '../../routes/emoji/util.js'
+    import { fade } from 'svelte/transition'
+    import { createEventDispatcher } from 'svelte'
+
+    const dispatch = createEventDispatcher()
+
+    export let emoji: Emoji
+
+    $: categoryName = categories.groups[emoji.g]
+    $: subCategoryName = categories.subgroups[emoji.sg]
+
+    function closeModal() {
+        dispatch('close')
+    }
+
+</script>
+
+<div class="absolute bg-white dark:bg-gray-700 inset-0 align-middle px-4" out:fade={{duration: 200}}>
+    <div class="relative h-full"
+         role="dialog"
+         aria-labelledby="modalTitle"
+         aria-describedby="modalDescription"
+    >
+        <button type="button"
+                class="absolute top-0 right-0 text-gray-500 dark:text-gray-300"
+                aria-label="Close modal"
+                title="Close"
+                on:click={closeModal}
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <div class="p-4 pb-6 flex flex-col text-center justify-between h-full">
+
+            <div>
+                <p class="text-center text-2xl dark:text-gray-200 px-4" id="modalDescription">
+                    {emoji.n}
+                </p>
+                <p class="mt-2 text-center uppercase text-xs font-light text-gray-500 dark:text-gray-400">
+                    {categoryName} &blacktriangleright; {subCategoryName}
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 text-gray-800 dark:text-gray-200 content-center">
+                <img class="w-max mx-auto" src={emojiPngPath(emoji)} title="Google PNG" alt="Google PNG">
+                <span class="text-6xl" title="Your Browser">{@html emojiHtmlChars(emoji)}</span>
+                <div class="uppercase text-sm mt-2">Image</div>
+                <div class="uppercase text-sm mt-2">Browser</div>
+
+            </div>
+
+            <div>
+                <h3 class="mb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">
+                    Codepoint{ emoji.qc.length !== 1 ? 's' : '' }
+                </h3>
+                <p class="font-mono text-xs flex dark:text-gray-200 space-x-3 justify-center">
+                    {@html emojiDisplayHtmlChars(emoji)}
+                </p>
+            </div>
+
+            {#if emoji.gh.length}
+                <div>
+                    <h3 class="mb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">
+                        GitHub shortcode{ emoji.gh.length !== 1 ? 's' : '' }
+                    </h3>
+                    <p class="font-mono text-xs dark:text-gray-200">{ emojiGhCodes(emoji) }</p>
+                </div>
+            {/if}
+
+            <div>
+                <h3 class="mb-2.5 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Copy As</h3>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

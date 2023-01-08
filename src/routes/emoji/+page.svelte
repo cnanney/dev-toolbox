@@ -8,6 +8,7 @@
     import type { Emoji } from '$lib/types'
     import { chunkify, scrollToTopById } from '$lib/util'
     import { onMount } from 'svelte'
+    import EmojiModal from '$lib/components/EmojiModal.svelte'
 
     let dataset: Emoji[],
         searchResults: Emoji[],
@@ -15,7 +16,9 @@
         resultSet: Emoji[] = [],
         visibleEmoji: Emoji[] = [],
         chunkIndex: number = 0,
-        fuse: Fuse<Emoji>
+        fuse: Fuse<Emoji>,
+        showModal: boolean = false,
+        modalEmoji: Emoji
 
     const ghOnlyEmojiList = allEmojiList.filter((el: Emoji) => el.gh.length)
     const chunkSize = 50
@@ -43,6 +46,7 @@
     }
 
     function doSearch() {
+        showModal = false
         searchResults = fuse.search($emojiInput).map(r => r.item)
         resultSet = $emojiInput ? searchResults : dataset
         resultChunks = [...chunkify(resultSet, chunkSize)] as [Emoji[]]
@@ -70,6 +74,15 @@
             callback: () => emojiGhOnly.update(val => !val),
         },
     ]
+
+    function openModal(e: CustomEvent) {
+        modalEmoji = e.detail.emoji
+        showModal = true
+    }
+    
+    function closeModal(e: CustomEvent) {
+        showModal = false
+    }
 </script>
 
 <CalcInput {...{
@@ -86,15 +99,16 @@
              class="px-4 mt-1 scrollbar scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-500 overflow-y-auto">
             <div class="pb-3 grid grid-cols-3 gap-3 justify-items-stretch">
                 {#each visibleEmoji as emoji (emoji.n)}
-                    <EmojiCell {emoji}/>
+                    <EmojiCell {emoji} on:showEmoji={openModal}/>
                 {/each}
             </div>
         </div>
-
         <div class="e-f flex bg-gray-50 dark:bg-gray-800 dark:text-gray-400 py-1.5 px-3 text-xs justify-between shadow-inner">
             <span>Emoji v13.1, Fully-Qualified</span>
             <span>{'Count: ' + Intl.NumberFormat()['format'](resultSet.length)}</span>
         </div>
-
     </div>
+    {#if showModal}
+        <EmojiModal emoji={modalEmoji} on:close={closeModal}/>
+    {/if}
 </div>
