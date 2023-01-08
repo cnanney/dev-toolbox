@@ -2,11 +2,10 @@
     import type { Emoji } from '$lib/types'
     import { emojiInput } from '$lib/stores'
 
-    export let emoji: Emoji,
-        displayName: string
+    export let emoji: Emoji
 
     export const getPngName = function (emoji: Emoji) {
-        const codes = emoji.qc || []
+        const codes = emoji.qc ?? []
 
         return (
             codes.length === 2 && codes.slice(-1)[0] === 'fe0f'
@@ -15,7 +14,7 @@
         ).join('_')
     }
     export const getPngPath = (emoji: Emoji) => `/emoji-png/${getPngName(emoji)}.png`
-    export const getGithubCodes = (emoji: Emoji) => emoji.gh.map(name => `:${name}:`).join("\n")
+    export const getGithubCodes = (emoji: Emoji) => emoji.gh.map(name => `:${name}:`).join('\n')
     export const getHtml = (emoji: Emoji) => emoji.qc.map((c) => `&#x${c};`).join('')
 
     function highlightedName(searchString: string) {
@@ -36,7 +35,7 @@
         <img src={getPngPath(emoji)} alt={emoji.n}/>
     </button>
     <div class="e-c-n">{@html displayName}</div>
-    {#if !!emoji.gh.length}
+    {#if emoji.gh.length}
     <span class="gh" title={getGithubCodes(emoji)}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor">
           <path fill-rule="evenodd" clip-rule="evenodd"

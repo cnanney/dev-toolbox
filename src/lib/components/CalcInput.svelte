@@ -1,7 +1,8 @@
 <script lang="ts">
     import ClearButton from '$lib/components/ClearButton.svelte'
-    import { resizeTypeSelectorIfPresent } from '$lib/util'
+    import { focusInput, resizeTypeSelectorIfPresent, waitForFonts } from '$lib/util'
     import type { Writable } from 'svelte/store'
+    import { onMount, tick } from 'svelte'
 
     export let inputLabel: string,
         inputValueStore: Writable<any>,
@@ -10,6 +11,13 @@
         inputOptions: object[] | null = null,
         inputModifiers: object[] | null = null,
         inputToggles: object[] | null = null
+
+    onMount(() => {
+        waitForFonts().then(() => {
+            resizeTypeSelectorIfPresent()
+            setTimeout(focusInput, 50)
+        })
+    })
 </script>
 
 <div class="wdt-input">

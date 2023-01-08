@@ -7,22 +7,19 @@
     import throttle from 'lodash-es/throttle'
     import type { Emoji } from '$lib/types'
     import { chunkify, scrollToTopById } from '$lib/util'
-    import { onDestroy, onMount } from 'svelte'
-    import { browser } from '$app/environment'
-    import type { Unsubscriber } from 'svelte/store'
+    import { onMount } from 'svelte'
 
     let dataset: Emoji[],
         searchResults: Emoji[],
         resultChunks: [Emoji[]],
         resultSet: Emoji[] = [],
         visibleEmoji: Emoji[] = [],
-        chunkIndex: number = 1,
-        fuse: Fuse<Emoji>,
-        emojiInputUnsub: Unsubscriber,
-        emojiGhOnlyUnsub: Unsubscriber
+        chunkIndex: number = 0,
+        fuse: Fuse<Emoji>
 
     const ghOnlyEmojiList = allEmojiList.filter((el: Emoji) => el.gh.length)
     const chunkSize = 50
+    const loadOffsetPx = 400 //px
     const fuseOptions = {
         keys: ['n'],
         shouldSort: false,
@@ -31,38 +28,36 @@
         useExtendedSearch: true,
     }
     const handleScroll = throttle((e) => {
-        let toEnd = e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight)
-        if (toEnd < 400) {
-            if (chunkIndex < resultChunks.length) {
-                visibleEmoji = [...visibleEmoji, ...resultChunks[chunkIndex++]]
-            }
+        if (
+            e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight) < loadOffsetPx
+            && chunkIndex + 1 < resultChunks.length
+        ) {
+            visibleEmoji = [...visibleEmoji, ...resultChunks[++chunkIndex]]
         }
     }, 50)
-    
-    function initDataset(){
+
+    function initDataset() {
         dataset = $emojiGhOnly ? ghOnlyEmojiList : allEmojiList
         fuse = new Fuse(dataset, fuseOptions)
         doSearch()
     }
-    
-    function doSearch(){
+
+    function doSearch() {
         searchResults = fuse.search($emojiInput).map(r => r.item)
         resultSet = $emojiInput ? searchResults : dataset
         resultChunks = [...chunkify(resultSet, chunkSize)] as [Emoji[]]
-        visibleEmoji = [...resultChunks[0]]
-        chunkIndex = 1
+        visibleEmoji = resultChunks.length ? [...resultChunks[chunkIndex = 0]] : []
         scrollToTopById('emojis')
     }
 
     onMount(() => {
         initDataset()
-        emojiGhOnlyUnsub = emojiGhOnly.subscribe(() => initDataset())
-        emojiInputUnsub = emojiInput.subscribe(() => doSearch())
-    })
-    onDestroy(() => {
-        if (!browser) return
-        emojiInputUnsub()
-        emojiGhOnlyUnsub()
+        const emojiGhOnlyUnsub = emojiGhOnly.subscribe(() => initDataset())
+        const emojiInputUnsub = emojiInput.subscribe(() => doSearch())
+        return () => {
+            emojiInputUnsub()
+            emojiGhOnlyUnsub()
+        }
     })
 
     const inputLabel = 'Emoji Search'
