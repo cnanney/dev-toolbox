@@ -1,10 +1,9 @@
 <script lang="ts">
-    import '../app.css'
-    import { getWdtElement, handleWindowResize, runningAsExtension } from '$lib/util'
     import Nav from '$lib/components/Nav.svelte'
-    import { classMap } from '$lib/util'
-    import { onMount } from 'svelte'
     import { darkModeEnabled } from '$lib/stores'
+    import { classMap, getWdtElement, handleWindowResize, runningAsExtension } from '$lib/util'
+    import { onMount } from 'svelte'
+    import '../app.css'
 
     onMount(() => {
 

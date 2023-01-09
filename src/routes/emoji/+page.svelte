@@ -1,15 +1,15 @@
 <script lang="ts">
-    import allEmojiList from '$lib/data/emoji-with-gh.json'
-    import { emojiInput, emojiGhOnly } from '$lib/stores'
+    import { beforeNavigate } from '$app/navigation'
     import CalcInput from '$lib/components/CalcInput.svelte'
-    import Fuse from 'fuse.js'
     import EmojiCell from '$lib/components/EmojiCell.svelte'
-    import throttle from 'lodash-es/throttle'
+    import EmojiModal from '$lib/components/EmojiModal.svelte'
+    import allEmojiList from '$lib/data/emoji-with-gh.json'
+    import { emojiGhOnly, emojiInput } from '$lib/stores'
     import type { Emoji } from '$lib/types'
     import { chunkify, focusInput, scrollToTopById } from '$lib/util'
+    import Fuse from 'fuse.js'
+    import throttle from 'lodash-es/throttle'
     import { onMount } from 'svelte'
-    import EmojiModal from '$lib/components/EmojiModal.svelte'
-    import { beforeNavigate } from '$app/navigation'
 
     let searchDataset: Emoji[],
         searchResults: Emoji[] = [],

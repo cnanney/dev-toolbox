@@ -1,8 +1,8 @@
 <script lang="ts">
     import ClearButton from '$lib/components/ClearButton.svelte'
     import { focusInput, resizeTypeSelectorIfPresent, waitForFonts } from '$lib/util'
+    import { onMount } from 'svelte'
     import type { Writable } from 'svelte/store'
-    import { onMount, tick } from 'svelte'
 
     export let inputLabel: string,
         inputValueStore: Writable<any>,

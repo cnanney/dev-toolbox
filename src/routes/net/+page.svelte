@@ -1,8 +1,8 @@
 <script lang="ts">
+    import CalcInput from '$lib/components/CalcInput.svelte'
+    import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { net } from '$lib/methods'
     import { netInput } from '$lib/stores'
-    import CalcOutput from '$lib/components/CalcOutput.svelte'
-    import CalcInput from '$lib/components/CalcInput.svelte'
     import type { NetInput, PreCalcCallback } from '$lib/types'
     import { Netmask } from 'netmask'
 

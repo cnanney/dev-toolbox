@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type { Emoji } from '$lib/types'
-    import categories from '$lib/data/emoji-category-map.json'
-    import { emojiDisplayHtmlChars, emojiGhCodes, emojiHtmlChars, emojiPngPath } from '../../routes/emoji/util.js'
-    import { fade } from 'svelte/transition'
-    import { createEventDispatcher } from 'svelte'
     import SecondaryButton from '$lib/components/SecondaryButton.svelte'
+    import categories from '$lib/data/emoji-category-map.json'
+    import type { Emoji } from '$lib/types'
     import { hasClipboardItem } from '$lib/util.js'
+    import { createEventDispatcher } from 'svelte'
+    import { fade } from 'svelte/transition'
+    import { emojiDisplayHtmlChars, emojiGhCodes, emojiHtmlChars, emojiPngPath } from '../../routes/emoji/util.js'
 
     const dispatch = createEventDispatcher()
 

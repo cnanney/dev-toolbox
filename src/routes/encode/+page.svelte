@@ -1,8 +1,8 @@
 <script lang="ts">
+    import CalcInput from '$lib/components/CalcInput.svelte'
+    import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { encode } from '$lib/methods'
     import { encodeInput } from '$lib/stores'
-    import CalcOutput from '$lib/components/CalcOutput.svelte'
-    import CalcInput from '$lib/components/CalcInput.svelte'
 
     const inputLabel = 'Text to Encode'
     const inputSize = 2

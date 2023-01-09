@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { Emoji } from '$lib/types'
     import { emojiInput } from '$lib/stores'
+    import type { Emoji } from '$lib/types'
     import { createEventDispatcher } from 'svelte'
     import { emojiGhCodes, emojiPngPath } from '../../routes/emoji/util.js'
-    
+
     const dispatch = createEventDispatcher()
 
     export let emoji: Emoji

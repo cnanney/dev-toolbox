@@ -1,8 +1,8 @@
 <script lang="ts">
+    import CalcInput from '$lib/components/CalcInput.svelte'
+    import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { decode } from '$lib/methods'
     import { decodeInput } from '$lib/stores'
-    import CalcOutput from '$lib/components/CalcOutput.svelte'
-    import CalcInput from '$lib/components/CalcInput.svelte'
 
     const inputLabel = 'Text to Decode'
     const inputSize = 2

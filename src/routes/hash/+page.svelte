@@ -1,8 +1,8 @@
 <script lang="ts">
+    import CalcInput from '$lib/components/CalcInput.svelte'
+    import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { hash } from '$lib/methods'
     import { hashInput } from '$lib/stores'
-    import CalcOutput from '$lib/components/CalcOutput.svelte'
-    import CalcInput from '$lib/components/CalcInput.svelte'
 
     const inputLabel = 'Text to Hash'
     const inputSize = 2

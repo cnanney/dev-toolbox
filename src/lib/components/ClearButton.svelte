@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { Writable } from 'svelte/store'
     import { focusInput } from '$lib/util'
     import { createEventDispatcher } from 'svelte'
+    import type { Writable } from 'svelte/store'
 
     export let inputValueStore: Writable<string>
-    
+
     const dispatch = createEventDispatcher()
 
     function clearInput() {

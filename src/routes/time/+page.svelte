@@ -1,10 +1,10 @@
 <script lang="ts">
+    import CalcInput from '$lib/components/CalcInput.svelte'
+    import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { time } from '$lib/methods'
     import { timeInput, timeInputType } from '$lib/stores'
-    import CalcOutput from '$lib/components/CalcOutput.svelte'
-    import CalcInput from '$lib/components/CalcInput.svelte'
-    import { DateTime } from 'luxon'
     import type { PreCalcCallback, TimeInput } from '$lib/types'
+    import { DateTime } from 'luxon'
     import { get } from 'svelte/store'
 
     function adjust(to = null) {

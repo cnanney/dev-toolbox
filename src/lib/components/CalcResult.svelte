@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { isFirefox, resizeTypeSelectorIfPresent, runCalc } from '$lib/util'
     import type { CalcResult, PreCalcCallback } from '$lib/types'
+    import { isFirefox, resizeTypeSelectorIfPresent, runCalc } from '$lib/util'
     import { tick } from 'svelte'
     import type { Writable } from 'svelte/store'
 
