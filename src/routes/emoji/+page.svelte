@@ -48,7 +48,7 @@
     function doSearch() {
         modalVisible = false
         searchResults = $emojiInput ? fuse.search($emojiInput).map(r => r.item) : searchDataset
-        resultChunks = [...chunkify(searchResults, chunkSize)] as [Emoji[]]
+        resultChunks = [...chunkify(searchResults, chunkSize)]
         visibleEmoji = resultChunks.length ? [...resultChunks[chunkIndex = 0]] : []
         scrollToTopById('emojis')
     }
