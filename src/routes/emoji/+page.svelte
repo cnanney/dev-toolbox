@@ -11,10 +11,9 @@
     import EmojiModal from '$lib/components/EmojiModal.svelte'
     import { beforeNavigate } from '$app/navigation'
 
-    let dataset: Emoji[],
-        searchResults: Emoji[],
-        resultChunks: [Emoji[]],
-        resultSet: Emoji[] = [],
+    let searchDataset: Emoji[],
+        searchResults: Emoji[] = [],
+        resultChunks: [Emoji[]] = [],
         visibleEmoji: Emoji[] = [],
         chunkIndex: number = 0,
         fuse: Fuse<Emoji>,
@@ -39,28 +38,30 @@
             visibleEmoji = [...visibleEmoji, ...resultChunks[++chunkIndex]]
         }
     }, 50)
-    
+
     function initDataset() {
-        dataset = $emojiGhOnly ? ghOnlyEmojiList : allEmojiList
-        fuse = new Fuse(dataset, fuseOptions)
+        searchDataset = $emojiGhOnly ? ghOnlyEmojiList : allEmojiList
+        fuse = new Fuse(searchDataset, fuseOptions)
         doSearch()
     }
+
     function doSearch() {
         modalVisible = false
-        searchResults = fuse.search($emojiInput).map(r => r.item)
-        resultSet = $emojiInput ? searchResults : dataset
-        resultChunks = [...chunkify(resultSet, chunkSize)] as [Emoji[]]
+        searchResults = $emojiInput ? fuse.search($emojiInput).map(r => r.item) : searchDataset
+        resultChunks = [...chunkify(searchResults, chunkSize)] as [Emoji[]]
         visibleEmoji = resultChunks.length ? [...resultChunks[chunkIndex = 0]] : []
         scrollToTopById('emojis')
     }
+
     function openModal(e: CustomEvent) {
         modalEmoji = e.detail.emoji
         modalVisible = true
     }
+
     function closeModal(e: CustomEvent) {
         modalVisible = false
     }
-    
+
     const inputLabel = 'Emoji Search'
     const inputSize = 1
     const inputValueStore = emojiInput
@@ -73,7 +74,6 @@
     ]
 
     onMount(() => {
-        initDataset()
         const emojiGhOnlyUnsub = emojiGhOnly.subscribe(() => initDataset())
         const emojiInputUnsub = emojiInput.subscribe(() => doSearch())
         return () => {
@@ -85,8 +85,11 @@
     beforeNavigate((nav) => {
         if (modalVisible) {
             modalVisible = false
-            nav.cancel()
-            focusInput()
+            // Back button while modal was open
+            if (nav.type !== 'link') {
+                nav.cancel()
+                focusInput()
+            }
         }
     })
 
@@ -111,7 +114,7 @@
         </div>
         <div class="e-f flex bg-gray-50 dark:bg-gray-800 dark:text-gray-400 py-1.5 px-3 text-xs justify-between shadow-inner">
             <span>Emoji v13.1, Fully-Qualified</span>
-            <span>{'Count: ' + Intl.NumberFormat()['format'](resultSet.length)}</span>
+            <span>{'Count: ' + Intl.NumberFormat()['format'](searchResults.length)}</span>
         </div>
     </div>
     {#if modalVisible}
