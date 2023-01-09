@@ -60,7 +60,7 @@
                         </label>
                     {/each}
                 {/if}
-                <ClearButton {inputValueStore}/>
+                <ClearButton on:clear {inputValueStore}/>
             </div>
         </div>
         <div class="mt-1">

@@ -51,13 +51,17 @@ export function resizeTypeSelectorIfPresent() {
     tempSelect.remove()
 }
 
-export async function createPopoutWindow(href: string | null = null) {
+export function handleWindowResize(rect: DOMRectReadOnly) {
+    window.resizeBy(
+        Math.ceil(rect.width - window.innerWidth),
+        Math.ceil(rect.height - window.innerHeight)
+    )
+}
+
+export async function createPopoutWindow() {
     if (!runningAsExtension) return
 
-    if (href === null) {
-        href = chrome.runtime.getURL('index.html')
-    }
-
+    const href = chrome.runtime.getURL('index.html')
     const rect = getWdtElement().getBoundingClientRect()
     const [initialW, initialH] = [rect.width + 30, rect.height + 50]
 

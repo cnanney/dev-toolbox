@@ -11,3 +11,5 @@ export const timeInputType: Writable<string> = writable('fromSeconds')
 export const netInput: Writable<string> = writable('')
 export const emojiInput: Writable<string> = writable('')
 export const emojiGhOnly: Writable<boolean> = writable(false)
+
+export const darkModeEnabled: Writable<boolean> = writable(false)

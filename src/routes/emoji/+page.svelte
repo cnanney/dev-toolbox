@@ -6,9 +6,10 @@
     import EmojiCell from '$lib/components/EmojiCell.svelte'
     import throttle from 'lodash-es/throttle'
     import type { Emoji } from '$lib/types'
-    import { chunkify, scrollToTopById } from '$lib/util'
+    import { chunkify, focusInput, scrollToTopById } from '$lib/util'
     import { onMount } from 'svelte'
     import EmojiModal from '$lib/components/EmojiModal.svelte'
+    import { beforeNavigate } from '$app/navigation'
 
     let dataset: Emoji[],
         searchResults: Emoji[],
@@ -17,7 +18,7 @@
         visibleEmoji: Emoji[] = [],
         chunkIndex: number = 0,
         fuse: Fuse<Emoji>,
-        showModal: boolean = false,
+        modalVisible: boolean = false,
         modalEmoji: Emoji
 
     const ghOnlyEmojiList = allEmojiList.filter((el: Emoji) => el.gh.length)
@@ -38,32 +39,28 @@
             visibleEmoji = [...visibleEmoji, ...resultChunks[++chunkIndex]]
         }
     }, 50)
-
+    
     function initDataset() {
         dataset = $emojiGhOnly ? ghOnlyEmojiList : allEmojiList
         fuse = new Fuse(dataset, fuseOptions)
         doSearch()
     }
-
     function doSearch() {
-        showModal = false
+        modalVisible = false
         searchResults = fuse.search($emojiInput).map(r => r.item)
         resultSet = $emojiInput ? searchResults : dataset
         resultChunks = [...chunkify(resultSet, chunkSize)] as [Emoji[]]
         visibleEmoji = resultChunks.length ? [...resultChunks[chunkIndex = 0]] : []
         scrollToTopById('emojis')
     }
-
-    onMount(() => {
-        initDataset()
-        const emojiGhOnlyUnsub = emojiGhOnly.subscribe(() => initDataset())
-        const emojiInputUnsub = emojiInput.subscribe(() => doSearch())
-        return () => {
-            emojiInputUnsub()
-            emojiGhOnlyUnsub()
-        }
-    })
-
+    function openModal(e: CustomEvent) {
+        modalEmoji = e.detail.emoji
+        modalVisible = true
+    }
+    function closeModal(e: CustomEvent) {
+        modalVisible = false
+    }
+    
     const inputLabel = 'Emoji Search'
     const inputSize = 1
     const inputValueStore = emojiInput
@@ -75,17 +72,27 @@
         },
     ]
 
-    function openModal(e: CustomEvent) {
-        modalEmoji = e.detail.emoji
-        showModal = true
-    }
-    
-    function closeModal(e: CustomEvent) {
-        showModal = false
-    }
+    onMount(() => {
+        initDataset()
+        const emojiGhOnlyUnsub = emojiGhOnly.subscribe(() => initDataset())
+        const emojiInputUnsub = emojiInput.subscribe(() => doSearch())
+        return () => {
+            emojiInputUnsub()
+            emojiGhOnlyUnsub()
+        }
+    })
+
+    beforeNavigate((nav) => {
+        if (modalVisible) {
+            modalVisible = false
+            nav.cancel()
+            focusInput()
+        }
+    })
+
 </script>
 
-<CalcInput {...{
+<CalcInput on:clear={doSearch} {...{
     inputLabel,
     inputValueStore,
     inputSize,
@@ -94,8 +101,7 @@
 
 <div class="wdt-output">
     <div class="flex flex-col">
-        <div id="emojis"
-             on:scroll|passive={handleScroll}
+        <div id="emojis" on:scroll={handleScroll}
              class="px-4 mt-1 scrollbar scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-500 overflow-y-auto">
             <div class="pb-3 grid grid-cols-3 gap-3 justify-items-stretch">
                 {#each visibleEmoji as emoji (emoji.n)}
@@ -108,7 +114,7 @@
             <span>{'Count: ' + Intl.NumberFormat()['format'](resultSet.length)}</span>
         </div>
     </div>
-    {#if showModal}
+    {#if modalVisible}
         <EmojiModal emoji={modalEmoji} on:close={closeModal}/>
     {/if}
 </div>
