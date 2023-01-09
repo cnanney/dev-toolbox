@@ -4,6 +4,8 @@
     import { emojiDisplayHtmlChars, emojiGhCodes, emojiHtmlChars, emojiPngPath } from '../../routes/emoji/util.js'
     import { fade } from 'svelte/transition'
     import { createEventDispatcher } from 'svelte'
+    import SecondaryButton from '$lib/components/SecondaryButton.svelte'
+    import { hasClipboardItem } from '$lib/util.js'
 
     const dispatch = createEventDispatcher()
 
@@ -11,6 +13,26 @@
 
     $: categoryName = categories.groups[emoji.g]
     $: subCategoryName = categories.subgroups[emoji.sg]
+
+    function copyChar() {
+        navigator.clipboard.writeText(
+            String.fromCodePoint(...emoji.qc.map(c => parseInt(c, 16))),
+        )
+    }
+
+    function copyImg() {
+        fetch(emojiPngPath(emoji)).then(response => {
+            navigator.clipboard.write([new ClipboardItem({'image/png': response.blob()})])
+        })
+    }
+
+    function copyHtml() {
+        navigator.clipboard.writeText(emojiHtmlChars(emoji))
+    }
+
+    function copyGithub() {
+        navigator.clipboard.writeText(`:${emoji.gh[0]}:`)
+    }
 
     function closeModal() {
         dispatch('close')
@@ -75,6 +97,16 @@
 
             <div>
                 <h3 class="mb-2.5 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Copy As</h3>
+                <div class="flex justify-center space-x-3 dark:bg-gray-700">
+                    <SecondaryButton size="xs" text="Emoji" title="Character" on:click={copyChar}/>
+                    {#if hasClipboardItem}
+                        <SecondaryButton size="xs" text="PNG" title="Google PNG" on:click={copyImg}/>
+                    {/if}
+                    <SecondaryButton size="xs" text="HTML" title="HTML encoded" on:click={copyHtml}/>
+                    {#if emoji.gh.length}
+                        <SecondaryButton size="xs" text="GitHub" title="GitHub shortcode" on:click={copyGithub}/>
+                    {/if}
+                </div>
             </div>
 
         </div>
