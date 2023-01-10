@@ -1,7 +1,10 @@
-<script>
+<script lang="ts">
     import { page } from '$app/stores'
-    import { darkModeEnabled } from '$lib/stores'
+    import { getSyncedStore } from '$lib/stores'
     import { createPopoutWindow } from '$lib/util'
+    import type { Writable } from 'svelte/store'
+
+    const darkModeEnabled = getSyncedStore('darkModeEnabled') as Writable<boolean>
 
     const nav = [
         {id: 'hash', href: '/hash', name: 'Hash',},

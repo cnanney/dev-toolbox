@@ -2,13 +2,13 @@
     import CalcInput from '$lib/components/CalcInput.svelte'
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { net } from '$lib/methods'
-    import { netInput } from '$lib/stores'
+    import { getSyncedStore } from '$lib/stores.js'
     import type { NetInput, PreCalcCallback } from '$lib/types'
     import { Netmask } from 'netmask'
 
     const inputLabel = 'IPv4 / CIDR / Decimal'
     const inputSize = 1
-    const inputValueStore = netInput
+    const inputValueStore = getSyncedStore('netInput')
 
     const preCalc: PreCalcCallback = (value): NetInput => {
         try {

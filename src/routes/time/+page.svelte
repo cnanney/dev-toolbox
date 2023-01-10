@@ -2,10 +2,13 @@
     import CalcInput from '$lib/components/CalcInput.svelte'
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { time } from '$lib/methods'
-    import { timeInput, timeInputType } from '$lib/stores'
+    import { getSyncedStore } from '$lib/stores.js'
     import type { PreCalcCallback, TimeInput } from '$lib/types'
     import { DateTime } from 'luxon'
-    import { get } from 'svelte/store'
+    import { get, type Writable } from 'svelte/store'
+
+    const timeInputType = getSyncedStore('timeInputType') as Writable<string>
+    const timeInput = getSyncedStore('timeInput') as Writable<string>
 
     function adjust(to = null) {
         const currentTime = get(timeInput)
@@ -27,8 +30,6 @@
 
     const inputLabel = 'Time in'
     const inputSize = 1
-    const inputTypeStore = timeInputType
-    const inputValueStore = timeInput
     const inputOptions = [
         {
             value: 'fromSeconds',
@@ -139,15 +140,15 @@
 
 <CalcInput {...{
     inputLabel,
-    inputValueStore,
+    inputValueStore: timeInput,
     inputSize,
-    inputTypeStore,
+    inputTypeStore: timeInputType,
     inputOptions,
     inputModifiers,
 }}/>
 <CalcOutput {...{
     outputRows,
-    inputValueStore,
-    inputTypeStore,
+    inputValueStore: timeInput,
+    inputTypeStore: timeInputType,
     preCalc,
 }}/>

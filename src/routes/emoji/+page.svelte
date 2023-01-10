@@ -4,12 +4,16 @@
     import EmojiCell from '$lib/components/EmojiCell.svelte'
     import EmojiModal from '$lib/components/EmojiModal.svelte'
     import allEmojiList from '$lib/data/emoji-with-gh.json'
-    import { emojiGhOnly, emojiInput } from '$lib/stores'
+    import { getSyncedStore } from '$lib/stores'
     import type { Emoji } from '$lib/types'
     import { chunkify, focusInput, scrollToTopById } from '$lib/util'
     import Fuse from 'fuse.js'
     import throttle from 'lodash-es/throttle'
     import { onMount } from 'svelte'
+    import type { Writable } from 'svelte/store'
+
+    const emojiInput = getSyncedStore('emojiInput') as Writable<string>
+    const emojiGhOnly = getSyncedStore('emojiGhOnly') as Writable<boolean>
 
     let searchDataset: Emoji[],
         searchResults: Emoji[] = [],
@@ -58,13 +62,12 @@
         modalVisible = true
     }
 
-    function closeModal(e: CustomEvent) {
+    function closeModal() {
         modalVisible = false
     }
 
     const inputLabel = 'Emoji Search'
     const inputSize = 1
-    const inputValueStore = emojiInput
     const inputToggles = [
         {
             text: 'GitHub Only',
@@ -97,7 +100,7 @@
 
 <CalcInput on:clear={doSearch} {...{
     inputLabel,
-    inputValueStore,
+    inputValueStore: emojiInput,
     inputSize,
     inputToggles
 }}/>

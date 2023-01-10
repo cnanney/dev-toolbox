@@ -2,11 +2,11 @@
     import CalcInput from '$lib/components/CalcInput.svelte'
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { hash } from '$lib/methods'
-    import { hashInput } from '$lib/stores'
+    import { getSyncedStore } from '$lib/stores.js'
 
     const inputLabel = 'Text to Hash'
     const inputSize = 2
-    const inputValueStore = hashInput
+    const inputValueStore = getSyncedStore('hashInput')
     const outputRows = [
         {
             cols: [

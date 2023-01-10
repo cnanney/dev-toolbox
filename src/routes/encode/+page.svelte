@@ -2,11 +2,11 @@
     import CalcInput from '$lib/components/CalcInput.svelte'
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { encode } from '$lib/methods'
-    import { encodeInput } from '$lib/stores'
+    import { getSyncedStore } from '$lib/stores.js'
 
     const inputLabel = 'Text to Encode'
     const inputSize = 2
-    const inputValueStore = encodeInput
+    const inputValueStore = getSyncedStore('encodeInput')
     const outputRows = [
         {
             cols: [

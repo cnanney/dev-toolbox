@@ -23,5 +23,5 @@ export type Emoji = {
     n: string, // name
     g: number, // group
     sg: number, // sub group
-    gh: string[]
+    gh: string[] // github aliases
 }

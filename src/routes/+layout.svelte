@@ -1,12 +1,14 @@
 <script lang="ts">
     import Nav from '$lib/components/Nav.svelte'
-    import { darkModeEnabled } from '$lib/stores'
+    import { getSyncedStore } from '$lib/stores'
     import { classMap, getWdtElement, handleWindowResize, runningAsExtension } from '$lib/util'
     import { onMount } from 'svelte'
+    import type { Writable } from 'svelte/store'
     import '../app.css'
 
     onMount(() => {
 
+        const darkModeEnabled = getSyncedStore('darkModeEnabled') as Writable<boolean>
         const wdt: Element = getWdtElement()
         const resizeObserver = new ResizeObserver(entries => {
             handleWindowResize(entries.at(0).contentRect)

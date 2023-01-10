@@ -2,11 +2,11 @@
     import CalcInput from '$lib/components/CalcInput.svelte'
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { decode } from '$lib/methods'
-    import { decodeInput } from '$lib/stores'
+    import { getSyncedStore } from '$lib/stores.js'
 
     const inputLabel = 'Text to Decode'
     const inputSize = 2
-    const inputValueStore = decodeInput
+    const inputValueStore = getSyncedStore('decodeInput')
     const outputRows = [
         {
             cols: [
