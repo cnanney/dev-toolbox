@@ -8,7 +8,7 @@
 
     const inputLabel = 'IPv4 / CIDR / Decimal'
     const inputSize = 1
-    const inputValueStore = getSyncedStore('netInput')
+    const inputValueStore = getSyncedStore('netInput', '')
 
     const preCalc: PreCalcCallback = (value): NetInput => {
         try {

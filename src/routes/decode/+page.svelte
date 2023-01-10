@@ -6,7 +6,7 @@
 
     const inputLabel = 'Text to Decode'
     const inputSize = 2
-    const inputValueStore = getSyncedStore('decodeInput')
+    const inputValueStore = getSyncedStore('decodeInput', '')
     const outputRows = [
         {
             cols: [

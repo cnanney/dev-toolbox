@@ -6,7 +6,7 @@
 
     const inputLabel = 'Text to Encode'
     const inputSize = 2
-    const inputValueStore = getSyncedStore('encodeInput')
+    const inputValueStore = getSyncedStore('encodeInput', '')
     const outputRows = [
         {
             cols: [

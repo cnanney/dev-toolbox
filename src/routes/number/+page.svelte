@@ -6,8 +6,8 @@
 
     const inputLabel = 'Number in'
     const inputSize = 1
-    const inputTypeStore = getSyncedStore('numberInputType')
-    const inputValueStore = getSyncedStore('numberInput')
+    const inputTypeStore = getSyncedStore('numberInputType', '10')
+    const inputValueStore = getSyncedStore('numberInput', '')
     const inputOptions = [
         {
             value: '10',

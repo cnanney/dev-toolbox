@@ -10,10 +10,9 @@
     import Fuse from 'fuse.js'
     import throttle from 'lodash-es/throttle'
     import { onMount } from 'svelte'
-    import type { Writable } from 'svelte/store'
 
-    const emojiInput = getSyncedStore('emojiInput') as Writable<string>
-    const emojiGhOnly = getSyncedStore('emojiGhOnly') as Writable<boolean>
+    const emojiInput = getSyncedStore('emojiInput', '')
+    const emojiGhOnly = getSyncedStore('emojiGhOnly', false)
 
     let searchDataset: Emoji[],
         searchResults: Emoji[] = [],

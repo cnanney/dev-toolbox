@@ -17,9 +17,10 @@ type StorageStores = {
     darkModeEnabled: Writable<boolean>,
 }
 
+const stores: { [k: string]: Writable<any> } = {}
 const storage: { [k: string]: any } = {}
 
-const writable = <Type>(defaultValue: Type, storageKey: string): Writable<Type> => {
+const keyedWritable = <Type>(storageKey: string, defaultValue: Type): Writable<Type> => {
     let _val = defaultValue
     const subs: StoreSubscribeCb<Type>[] = []
 
@@ -51,20 +52,10 @@ const writable = <Type>(defaultValue: Type, storageKey: string): Writable<Type> 
     return {subscribe, set, update}
 }
 
-export const getSyncedStore = (key: keyof StorageStores): ValueOf<StorageStores> => {
-    return stores[key]
-}
+export const getSyncedStore = <Type>(key: string, defaultValue: Type): Writable<Type> => {
+    if (!Object.hasOwn(stores, key)) {
+        stores[key] = keyedWritable(key, defaultValue)
+    }
 
-const stores: StorageStores = {
-    hashInput: writable('', 'hashInput'),
-    encodeInput: writable('', 'encodeInput'),
-    decodeInput: writable('', 'decodeInput'),
-    numberInput: writable('', 'numberInput'),
-    numberInputType: writable('10', 'numberInputType'),
-    timeInput: writable('', 'timeInput'),
-    timeInputType: writable('fromSeconds', 'timeInputType'),
-    netInput: writable('', 'netInput'),
-    emojiInput: writable('', 'emojiInput'),
-    emojiGhOnly: writable(false, 'emojiGhOnly'),
-    darkModeEnabled: writable(false, 'darkModeEnabled'),
+    return stores[key]
 }

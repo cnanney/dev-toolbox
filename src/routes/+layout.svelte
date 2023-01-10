@@ -8,7 +8,7 @@
 
     onMount(() => {
 
-        const darkModeEnabled = getSyncedStore('darkModeEnabled') as Writable<boolean>
+        const darkModeEnabled = getSyncedStore('darkModeEnabled', false)
         const wdt: Element = getWdtElement()
         const resizeObserver = new ResizeObserver(entries => {
             handleWindowResize(entries.at(0).contentRect)

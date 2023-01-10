@@ -6,7 +6,7 @@
 
     const inputLabel = 'Text to Hash'
     const inputSize = 2
-    const inputValueStore = getSyncedStore('hashInput')
+    const inputValueStore = getSyncedStore('hashInput', '')
     const outputRows = [
         {
             cols: [

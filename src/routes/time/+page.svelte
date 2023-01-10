@@ -5,10 +5,10 @@
     import { getSyncedStore } from '$lib/stores.js'
     import type { PreCalcCallback, TimeInput } from '$lib/types'
     import { DateTime } from 'luxon'
-    import { get, type Writable } from 'svelte/store'
+    import { get } from 'svelte/store'
 
-    const timeInputType = getSyncedStore('timeInputType') as Writable<string>
-    const timeInput = getSyncedStore('timeInput') as Writable<string>
+    const timeInputType = getSyncedStore('timeInputType', 'fromSeconds')
+    const timeInput = getSyncedStore('timeInput', '')
 
     function adjust(to = null) {
         const currentTime = get(timeInput)
