@@ -1,6 +1,10 @@
 import type { DateTime } from 'luxon'
 import type { Netmask } from 'netmask'
 
+export type TKey = string | number | symbol
+export type TObject = Record<TKey, any>
+export type TNullish = null | undefined;
+
 export type HashInput = string
 export type EncodeInput = string
 export type DecodeInput = string

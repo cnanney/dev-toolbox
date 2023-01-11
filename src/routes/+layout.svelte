@@ -3,7 +3,6 @@
     import { getSyncedStore } from '$lib/stores'
     import { classMap, getWdtElement, handleWindowResize, runningAsExtension } from '$lib/util'
     import { onMount } from 'svelte'
-    import type { Writable } from 'svelte/store'
     import '../app.css'
 
     onMount(() => {
