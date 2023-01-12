@@ -1,5 +1,7 @@
 <script lang="ts">
+    import { afterNavigate } from '$app/navigation'
     import Nav from '$lib/components/Nav.svelte'
+    import { storageService } from '$lib/storage'
     import { getSyncedStore } from '$lib/stores'
     import { classMap, getWdtElement, handleWindowResize, runningAsExtension } from '$lib/util'
     import { onMount } from 'svelte'
@@ -24,6 +26,10 @@
         })
 
         return () => resizeObserver.unobserve(wdt)
+    })
+
+    afterNavigate(async (nav) => {
+        await storageService.set('lastNav', nav.to.route?.id).save()
     })
 
 </script>

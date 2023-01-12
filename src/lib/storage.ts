@@ -17,22 +17,44 @@ abstract class AbstractStorageService {
     }
 
     async init(): Promise<void> {
-        this.store = (await this.get()) || {}
+        this.store = (await this.load()) || {}
     }
 
-    abstract get(): Promise<TObject | null>;
+    get(key?: string): any {
+        return resolveGet(this.store, key)
+    }
+
+    set(key: string, val: any): this {
+        this._store[key] = val
+
+        return this
+    }
+
+    abstract load(): Promise<TObject | null>;
 
     abstract save(): Promise<void>;
 
     abstract flush(): Promise<void>;
 }
 
+const resolveGet = (obj: TObject, key?: string): any => {
+    if (key == null) {
+        return obj
+    }
+
+    if (obj != null && obj[key] != null) {
+        return obj[key]
+    }
+
+    return null
+}
+
 class ChromeStorageService extends AbstractStorageService {
     protected chromeStorageApi: chrome.storage.StorageArea = chrome.storage.local
 
-    async get(): Promise<TObject | null> {
+    async load(): Promise<TObject | null> {
         return new Promise((resolve) => {
-            this.chromeStorageApi.get(STORAGE_KEY, (obj: any) => {
+            this.chromeStorageApi.get(STORAGE_KEY, (obj: TObject) => {
                 const val = obj[STORAGE_KEY]
                 if (val != null) {
                     resolve(val as TObject)
@@ -62,7 +84,7 @@ class ChromeStorageService extends AbstractStorageService {
 }
 
 class HtmlStorageService extends AbstractStorageService {
-    get(): Promise<TObject | null> {
+    async load(): Promise<TObject | null> {
         let json = window.sessionStorage.getItem(STORAGE_KEY)
 
         if (json != null) {
@@ -74,13 +96,13 @@ class HtmlStorageService extends AbstractStorageService {
         return Promise.resolve(null)
     }
 
-    save(): Promise<void> {
+    async save(): Promise<void> {
         const json = JSON.stringify(this.store)
         window.sessionStorage.setItem(STORAGE_KEY, json)
         return Promise.resolve()
     }
 
-    flush(): Promise<void> {
+    async flush(): Promise<void> {
         window.sessionStorage.removeItem(STORAGE_KEY)
         return Promise.resolve()
     }

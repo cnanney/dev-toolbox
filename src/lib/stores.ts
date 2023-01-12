@@ -25,8 +25,7 @@ const keyedWritable = <Type>(key: string, defaultValue: Type): Writable<Type> =>
     const subs: StoreSubscribeCb<Type>[] = []
 
     const sync = (v: Type): void => {
-        storageService.store[key] = v
-        storageService.save().then()
+        storageService.set(key, v).save().then()
     }
 
     const subscribe = (cb: StoreSubscribeCb<Type>) => {
@@ -54,7 +53,7 @@ const keyedWritable = <Type>(key: string, defaultValue: Type): Writable<Type> =>
 
 export const getSyncedStore = <Type>(key: string, defaultValue: Type): Writable<Type> => {
     if (!Object.hasOwn(storesDirectory, key)) {
-        storesDirectory[key] = keyedWritable(key, (storageService.store[key] ?? defaultValue))
+        storesDirectory[key] = keyedWritable(key, (storageService.get(key) ?? defaultValue))
     }
 
     return storesDirectory[key]

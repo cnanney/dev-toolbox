@@ -1,6 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
+    import { storageService } from '$lib/storage'
     import { onMount } from 'svelte'
 
-    onMount(() => goto('/hash'))
+    onMount(() => goto(storageService.get('lastNav') ?? '/hash'))
 </script>
