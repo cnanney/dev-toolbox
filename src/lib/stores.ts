@@ -1,10 +1,10 @@
-import { STORAGE_KEY, storageService } from '$lib/storage'
+import { storageService } from '$lib/storage'
 import type { Writable } from 'svelte/store'
 
 type ValueOf<T> = T[keyof T]
 type StoreSubscribeCb<T> = (val: T) => unknown
 type StoreUpdateCb<T> = (val: T) => T
-type StorageStores = {
+type WritableStores = {
     hashInput: Writable<string>,
     encodeInput: Writable<string>,
     decodeInput: Writable<string>,
@@ -26,7 +26,7 @@ const keyedWritable = <Type>(key: string, defaultValue: Type): Writable<Type> =>
 
     const sync = (v: Type): void => {
         storageService.store[key] = v
-        storageService.save(STORAGE_KEY, storageService.store).then()
+        storageService.save().then()
     }
 
     const subscribe = (cb: StoreSubscribeCb<Type>) => {

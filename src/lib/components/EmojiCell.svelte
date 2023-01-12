@@ -1,13 +1,12 @@
 <script lang="ts">
-    import { getSyncedStore } from '$lib/stores'
     import type { Emoji } from '$lib/types'
     import { createEventDispatcher } from 'svelte'
+    import type { Writable } from 'svelte/store'
     import { emojiGhCodes, emojiPngPath } from '../../routes/emoji/util.js'
 
     const dispatch = createEventDispatcher()
-    const emojiInput = getSyncedStore('emojiInput', '')
 
-    export let emoji: Emoji
+    export let emoji: Emoji, emojiInput: Writable<string>
 
     function highlightedName(searchString: string) {
         let highlighted = emoji.n.toLowerCase()

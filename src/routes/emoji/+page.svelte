@@ -110,7 +110,7 @@
              class="px-4 mt-1 scrollbar scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-500 overflow-y-auto">
             <div class="pb-3 grid grid-cols-3 gap-3 justify-items-stretch">
                 {#each visibleEmoji as emoji (emoji.n)}
-                    <EmojiCell {emoji} on:showEmoji={openModal}/>
+                    <EmojiCell {emoji} {emojiInput} on:showEmoji={openModal}/>
                 {/each}
             </div>
         </div>

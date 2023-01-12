@@ -1,4 +1,4 @@
-import type { TObject, TNullish } from '$lib/types'
+import type { TObject } from '$lib/types'
 import { runningAsExtension } from '$lib/util'
 
 // Credit to https://github.com/bitwarden/clients/tree/master/apps/browser/src/services
@@ -11,7 +11,7 @@ abstract class AbstractStorageService {
     get store(): TObject {
         return this._store
     }
-    
+
     set store(value: TObject) {
         this._store = value
     }
@@ -20,36 +20,22 @@ abstract class AbstractStorageService {
         this.store = (await this.get()) || {}
     }
 
-    abstract get<T>(key?: string): Promise<T | null>;
+    abstract get(): Promise<TObject | null>;
 
-    abstract has(key: string): Promise<boolean>;
+    abstract save(): Promise<void>;
 
-    abstract save<T>(key: string, obj: T): Promise<void>;
-
-    abstract remove(key: string): Promise<void>;
-}
-
-const resolveGet = (obj: TObject, key: string | TNullish = null) => {
-    if (key == null) {
-        return obj
-    }
-
-    if (obj != null && obj[key] != null) {
-        return obj[key]
-    }
-
-    return null
+    abstract flush(): Promise<void>;
 }
 
 class ChromeStorageService extends AbstractStorageService {
     protected chromeStorageApi: chrome.storage.StorageArea = chrome.storage.local
 
-    async get<T>(key?: string): Promise<T | null> {
+    async get(): Promise<TObject | null> {
         return new Promise((resolve) => {
             this.chromeStorageApi.get(STORAGE_KEY, (obj: any) => {
-                const val = resolveGet(obj[STORAGE_KEY], key)
+                const val = obj[STORAGE_KEY]
                 if (val != null) {
-                    resolve(val as T)
+                    resolve(val as TObject)
                     return
                 }
                 resolve(null)
@@ -57,25 +43,8 @@ class ChromeStorageService extends AbstractStorageService {
         })
     }
 
-    async has(key: string): Promise<boolean> {
-        return (await this.get(key)) != null
-    }
-
-    async save(key: string, obj: any): Promise<void> {
-        if (obj == null) {
-            // Fix safari not liking null in set
-            return new Promise<void>((resolve) => {
-                this.chromeStorageApi.remove(key, () => {
-                    resolve()
-                })
-            })
-        }
-
-        if (obj instanceof Set) {
-            obj = Array.from(obj)
-        }
-
-        const keyedObj = {[key]: obj}
+    async save(): Promise<void> {
+        const keyedObj = {[STORAGE_KEY]: this.store}
         return new Promise<void>((resolve) => {
             this.chromeStorageApi.set(keyedObj, () => {
                 resolve()
@@ -83,9 +52,9 @@ class ChromeStorageService extends AbstractStorageService {
         })
     }
 
-    async remove(key: string): Promise<void> {
+    async flush(): Promise<void> {
         return new Promise<void>((resolve) => {
-            this.chromeStorageApi.remove(key, () => {
+            this.chromeStorageApi.remove(STORAGE_KEY, () => {
                 resolve()
             })
         })
@@ -93,39 +62,26 @@ class ChromeStorageService extends AbstractStorageService {
 }
 
 class HtmlStorageService extends AbstractStorageService {
-    get<T>(key?: string): Promise<T | null> {
+    get(): Promise<TObject | null> {
         let json = window.sessionStorage.getItem(STORAGE_KEY)
 
         if (json != null) {
             const obj = JSON.parse(json)
-            const val = resolveGet(obj, key)
-            if (val != null) {
-                return Promise.resolve(val as T)
+            if (obj != null) {
+                return Promise.resolve(obj as TObject)
             }
         }
         return Promise.resolve(null)
     }
 
-    async has(key: string): Promise<boolean> {
-        return (await this.get(key)) != null
-    }
-
-    save(key: string, obj: any): Promise<void> {
-        if (obj == null) {
-            return this.remove(key)
-        }
-
-        if (obj instanceof Set) {
-            obj = Array.from(obj)
-        }
-
-        const json = JSON.stringify(obj)
-        window.sessionStorage.setItem(key, json)
+    save(): Promise<void> {
+        const json = JSON.stringify(this.store)
+        window.sessionStorage.setItem(STORAGE_KEY, json)
         return Promise.resolve()
     }
 
-    remove(key: string): Promise<void> {
-        window.sessionStorage.removeItem(key)
+    flush(): Promise<void> {
+        window.sessionStorage.removeItem(STORAGE_KEY)
         return Promise.resolve()
     }
 }

@@ -5,9 +5,9 @@
     import { onMount } from 'svelte'
     import '../app.css'
 
-    onMount(() => {
+    const darkModeEnabled = getSyncedStore('darkModeEnabled', false)
 
-        const darkModeEnabled = getSyncedStore('darkModeEnabled', false)
+    onMount(() => {
         const wdt: Element = getWdtElement()
         const resizeObserver = new ResizeObserver(entries => {
             handleWindowResize(entries.at(0).contentRect)
