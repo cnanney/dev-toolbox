@@ -15,7 +15,7 @@
     onMount(() => {
         waitForFonts().then(() => {
             resizeTypeSelectorIfPresent()
-            setTimeout(focusInput, 50)
+            setTimeout(focusInput, 10)
         })
     })
 </script>

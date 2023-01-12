@@ -1,14 +1,23 @@
 {
-  "name": "Test Svelte Extension",
-  "description": "A browser extension made with Svelte Kit",
-  "version": "1.0.0",
+  "name": "Dev Toolbox Svelte",
+  "description": "Dev Toolbox provides quick offline access to various development tools.",
+  "version": "1.0.10",
   "manifest_version": 3,
   "permissions": [
     "storage"
   ],
   "action": {
-    "default_title": "Test Svelte Extension",
-    "default_icon": "favicon.png",
-    "default_popup": "index.html"
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "/img/tb_16.png",
+      "24": "/img/tb_24.png"
+    }
+  },
+  "icons": {
+    "16": "/img/tb_16.png",
+    "24": "/img/tb_24.png",
+    "32": "/img/tb_32.png",
+    "48": "/img/tb_48.png",
+    "128": "/img/tb_128.png"
   }
 }

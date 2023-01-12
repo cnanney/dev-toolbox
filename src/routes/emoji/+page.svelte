@@ -25,7 +25,7 @@
 
     const ghOnlyEmojiList = allEmojiList.filter((el: Emoji) => el.gh.length)
     const chunkSize = 50
-    const loadOffsetPx = 400 //px
+    const loadOffsetPx = 500 //px
     const fuseOptions = {
         keys: ['n'],
         shouldSort: false,
