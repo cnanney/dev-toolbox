@@ -3,9 +3,9 @@
     import categories from '$lib/data/emoji-category-map.json'
     import type { Emoji } from '$lib/types'
     import { hasClipboardItem } from '$lib/util.js'
+    import { emojiDisplayHtmlChars, emojiGhCodes, emojiHtmlChars, emojiPngPath } from '$lib/util/emoji'
     import { createEventDispatcher } from 'svelte'
     import { fade } from 'svelte/transition'
-    import { emojiDisplayHtmlChars, emojiGhCodes, emojiHtmlChars, emojiPngPath } from '../../routes/emoji/util.js'
 
     const dispatch = createEventDispatcher()
 
@@ -14,10 +14,12 @@
     $: categoryName = categories.groups[emoji.g]
     $: subCategoryName = categories.subgroups[emoji.sg]
 
+    function getEmojiChar() {
+        return String.fromCodePoint(...emoji.qc.map(c => parseInt(c, 16)))
+    }
+
     function copyChar() {
-        navigator.clipboard.writeText(
-            String.fromCodePoint(...emoji.qc.map(c => parseInt(c, 16))),
-        )
+        navigator.clipboard.writeText(getEmojiChar())
     }
 
     function copyImg() {

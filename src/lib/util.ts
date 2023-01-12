@@ -1,6 +1,3 @@
-import base64 from 'crypto-js/enc-base64'
-import utf8 from 'crypto-js/enc-utf8'
-
 export const isBrowser: boolean = typeof window !== 'undefined' && typeof document !== 'undefined'
 export const userAgent: string = isBrowser ? window.navigator.userAgent : ''
 export const isFirefox: boolean = isBrowser
@@ -84,36 +81,7 @@ export async function createPopoutWindow() {
     window.close()
 }
 
-export function b64(input: any, method = 'encode'): string {
-    try {
-        return method === 'encode'
-            ? base64.stringify(utf8.parse(String(input)))
-            : utf8.stringify(base64.parse(String(input)))
-    } catch (e) {
-        return ''
-    }
-}
-
-export function toBase(input: string, base: number, pad: number | null = null): string {
-    try {
-        let string = BigInt(input).toString(base)
-        return pad ? string.padStart(pad, '0') : string
-    } catch (e) {
-        return ''
-    }
-}
-
-export function runCalc(fn: (input: any) => string, value: any): string {
-    if (!value) return ''
-
-    try {
-        return fn(value)
-    } catch (e) {
-        return ''
-    }
-}
-
-export function* chunkify<T>(arr: T[], n: number) {
+export function* chunkify<T>(arr: T[], n: number): Generator<T[]> {
     for (let i = 0; i < arr.length; i += n) {
         yield arr.slice(i, i + n)
     }

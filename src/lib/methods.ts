@@ -1,5 +1,6 @@
 import type { DecodeInput, EncodeInput, HashInput, NetInput, NumberInput, TimeInput } from '$lib/types'
-import { b64, toBase } from '$lib/util'
+import base64 from 'crypto-js/enc-base64'
+import utf8 from 'crypto-js/enc-utf8'
 import md5 from 'crypto-js/md5'
 import ripemd160 from 'crypto-js/ripemd160'
 import sha1 from 'crypto-js/sha1'
@@ -8,6 +9,25 @@ import sha3 from 'crypto-js/sha3'
 import sha512 from 'crypto-js/sha512'
 import { escape, unescape } from 'lodash-es'
 import { DateTime } from 'luxon'
+
+function b64(input: any, method = 'encode'): string {
+    try {
+        return method === 'encode'
+            ? base64.stringify(utf8.parse(String(input)))
+            : utf8.stringify(base64.parse(String(input)))
+    } catch (e) {
+        return ''
+    }
+}
+
+function toBase(input: string, base: number, pad: number | null = null): string {
+    try {
+        let string = BigInt(input).toString(base)
+        return pad ? string.padStart(pad, '0') : string
+    } catch (e) {
+        return ''
+    }
+}
 
 export const hash = {
     md5: (input: HashInput) => md5(input).toString(),

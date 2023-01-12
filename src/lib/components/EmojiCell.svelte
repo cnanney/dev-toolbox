@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { Emoji } from '$lib/types'
+    import { emojiGhCodes, emojiPngPath } from '$lib/util/emoji'
     import { createEventDispatcher } from 'svelte'
     import type { Writable } from 'svelte/store'
-    import { emojiGhCodes, emojiPngPath } from '../../routes/emoji/util.js'
 
     const dispatch = createEventDispatcher()
 

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { CalcResult, PreCalcCallback } from '$lib/types'
-    import { isFirefox, resizeTypeSelectorIfPresent, runCalc } from '$lib/util'
+    import { isFirefox, resizeTypeSelectorIfPresent } from '$lib/util'
     import { tick } from 'svelte'
     import type { Writable } from 'svelte/store'
 
@@ -12,7 +12,16 @@
     $: calcInput = (preCalc) ? preCalc($inputValueStore, $inputTypeStore!) : $inputValueStore
     $: result = runCalc(calc.method, calcInput)
 
-    function sendToInput() {
+    function runCalc(fn: (input: any) => string, value: any): string {
+        if (!value) return ''
+        try {
+            return fn(value)
+        } catch (e) {
+            return ''
+        }
+    }
+
+    function sendToInput(): void {
         if (calc.sendInputType && inputTypeStore) {
             inputTypeStore.set(calc.sendInputType)
             tick().then(resizeTypeSelectorIfPresent)
@@ -20,7 +29,7 @@
         inputValueStore.set(result)
     }
 
-    function copyToClipboard(event: Event) {
+    function copyToClipboard(event: Event): void {
         const textarea = (event.target as HTMLElement)
             .closest('div.segment')
             .querySelector('textarea') as HTMLTextAreaElement
