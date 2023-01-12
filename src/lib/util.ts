@@ -17,6 +17,10 @@ export const getWdtElement = () => document.querySelector('.wdt') as HTMLElement
 export const getInput = () => document.getElementById('wdtInput') as HTMLTextAreaElement
 export const focusInput = (): void => getInput()?.focus()
 export const waitForFonts = async (): Promise<FontFaceSet> => await document.fonts.ready
+export const initInputs = () => {
+    resizeTypeSelectorIfPresent()
+    setTimeout(focusInput, 10)
+}
 
 export function classMap(classArray: (string | { [k: string]: any })[]): string {
     const classes: string[] = []
@@ -48,6 +52,7 @@ export function resizeTypeSelectorIfPresent() {
     tempSelect.appendChild(tempOption)
     target.after(tempSelect)
     target.style.width = `${tempSelect.getBoundingClientRect().width}px`
+    target.classList.remove('unloaded')
     tempSelect.remove()
 }
 

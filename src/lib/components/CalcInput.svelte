@@ -1,6 +1,6 @@
 <script lang="ts">
     import ClearButton from '$lib/components/ClearButton.svelte'
-    import { focusInput, resizeTypeSelectorIfPresent, waitForFonts } from '$lib/util'
+    import { initInputs, resizeTypeSelectorIfPresent } from '$lib/util'
     import { onMount } from 'svelte'
     import type { Writable } from 'svelte/store'
 
@@ -13,10 +13,7 @@
         inputToggles: object[] | null = null
 
     onMount(() => {
-        waitForFonts().then(() => {
-            resizeTypeSelectorIfPresent()
-            setTimeout(focusInput, 10)
-        })
+        initInputs()
     })
 </script>
 
@@ -31,7 +28,7 @@
                 {#if inputOptions}
                     <select bind:value={$inputTypeStore} on:change={resizeTypeSelectorIfPresent}
                             class="input-select mt-0 p-0 pr-6 pl-1 text-sm font-semibold text-gray-700 
-                            dark:bg-gray-700 dark:text-gray-200 border-0 focus:ring-0 cursor-pointer">
+                            dark:bg-gray-700 dark:text-gray-200 border-0 focus:ring-0 cursor-pointer unloaded">
                         {#each inputOptions as option, i}
                             <option value={option.value}>{option.text}</option>
                         {/each}
