@@ -3,34 +3,43 @@
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { time } from '$lib/methods'
     import { getSyncedStore } from '$lib/stores.js'
-    import type { PreCalcCallback, TimeInput } from '$lib/types'
-    import { DateTime } from 'luxon'
+    import type {
+        CalcRow,
+        InputModifier,
+        InputOption,
+        PreCalcCallbackWithType,
+        TimeInput,
+        TimeTypeFromFormats,
+        TimeTypeToFormats
+    } from '$lib/types'
+    import { DateTime, type DurationLike, type ToSQLOptions } from 'luxon'
     import { get } from 'svelte/store'
 
     const timeInputType = getSyncedStore('timeInputType', 'fromSeconds')
     const timeInput = getSyncedStore('timeInput', '')
 
-    function adjust(to = null) {
+    function adjust(to: string | null = null) {
         const currentTime = get(timeInput)
         const currentTimeType = get(timeInputType)
 
-        let now = DateTime.now().toUTC(),
-            base = to === null ? now : (preCalc(currentTime, currentTimeType) || now),
-            method = currentTimeType.replace('from', 'to'),
-            opts = {
+        let now: DateTime = DateTime.now().toUTC(),
+            base: DateTime = to === null ? now : (preCalc(currentTime, currentTimeType) || now),
+            method = currentTimeType.replace('from', 'to') as TimeTypeToFormats,
+            opts: { [k: string]: ToSQLOptions } = {
                 toSQL: {includeOffset: false},
             }
 
         let val = (to === null
             ? base
-            : base.plus({[to]: 1}))[method](opts[method] || {})
+            // @ts-ignore
+            : base.plus({[to as DurationLike]: 1}))[method](opts[method] || {})
 
-        timeInput.set(typeof val === 'string' ? val.replace(/\.000$/, '') : val)
+        timeInput.set(typeof val === 'string' ? val.replace(/\.000$/, '') : String(val))
     }
 
     const inputLabel = 'Time in'
     const inputSize = 1
-    const inputOptions = [
+    const inputOptions: InputOption[] = [
         {
             value: 'fromSeconds',
             text: 'Unix (Seconds)'
@@ -53,7 +62,7 @@
         },
     ]
 
-    const inputModifiers = [
+    const inputModifiers: InputModifier[] = [
         {
             text: 'Now',
             callback: () => adjust(),
@@ -94,20 +103,21 @@
         },
     ]
 
-    const preCalc: PreCalcCallback = (value, type): TimeInput => {
+    const preCalc: PreCalcCallbackWithType = (value, type): TimeInput => {
         try {
-            let luxonInput = ['fromMillis', 'fromSeconds'].includes(type ?? '')
+            let luxonInput = ['fromMillis', 'fromSeconds'].includes(type)
                 ? Number(value)
                 : value
-            let parsed = DateTime[type](luxonInput, {zone: 'utc'})
+            // @ts-ignore
+            let parsed = DateTime[type as TimeTypeFromFormats](luxonInput, {zone: 'utc'}) as DateTime
 
-            return (!value || parsed.invalid) ? '' : parsed
+            return (!value || !parsed.isValid) ? null : parsed
         } catch (e) {
             return null
         }
     }
 
-    const outputRows = [
+    const outputRows: CalcRow[] = [
         {
             cols: [
                 {title: 'Unix (Seconds)', size: 1, method: time.unix_sec, sendInputType: 'fromSeconds'},

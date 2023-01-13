@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { TObject } from '$lib/types'
     import { classMap } from '$lib/util'
 
     export let size: string,
@@ -7,7 +8,7 @@
 
     $: classes = sizes[size] || sizes['xs']
 
-    const sizes = {
+    const sizes: TObject = {
         xs: 'inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-semibold rounded',
         sm: 'inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-semibold rounded-md',
         md: 'inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md',

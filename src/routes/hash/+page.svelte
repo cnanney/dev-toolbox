@@ -3,11 +3,12 @@
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { hash } from '$lib/methods'
     import { getSyncedStore } from '$lib/stores.js'
+    import type { CalcRow } from '$lib/types'
 
     const inputLabel = 'Text to Hash'
     const inputSize = 2
     const inputValueStore = getSyncedStore('hashInput', '')
-    const outputRows = [
+    const outputRows: CalcRow[] = [
         {
             cols: [
                 {title: 'MD5', size: 1, method: hash.md5},

@@ -3,12 +3,13 @@
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { number } from '$lib/methods'
     import { getSyncedStore } from '$lib/stores.js'
+    import type { CalcRow, InputOption, PreCalcCallbackWithType, TObject } from '$lib/types'
 
     const inputLabel = 'Number in'
     const inputSize = 1
     const inputTypeStore = getSyncedStore('numberInputType', '10')
     const inputValueStore = getSyncedStore('numberInput', '')
-    const inputOptions = [
+    const inputOptions: InputOption[] = [
         {
             value: '10',
             text: 'Decimal'
@@ -26,8 +27,8 @@
             text: 'Hexadecimal'
         },
     ]
-    const preCalc = (value, type) => {
-        const bigIntPrefixes = {
+    const preCalc: PreCalcCallbackWithType = (value, type) => {
+        const bigIntPrefixes: TObject = {
             '2': '0b',
             '8': '0o',
             '10': '',
@@ -35,7 +36,7 @@
         }
         return (bigIntPrefixes[type] || '') + value
     }
-    const outputRows = [
+    const outputRows: CalcRow[] = [
         {
             cols: [
                 {title: 'Binary', size: 2, method: number.bin, sendInputType: '2'},

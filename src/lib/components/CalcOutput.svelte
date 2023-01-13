@@ -1,13 +1,13 @@
 <script lang="ts">
     import CalcResult from '$lib/components/CalcResult.svelte'
-    import type { PreCalcCallback } from '$lib/types'
+    import type { CalcRow, PreCalcCallbackNoType, PreCalcCallbackWithType, TNullish } from '$lib/types'
     import { classMap } from '$lib/util.js'
     import type { Writable } from 'svelte/store'
 
-    export let outputRows: object[],
+    export let outputRows: CalcRow[],
         inputValueStore: Writable<string>,
-        inputTypeStore: Writable<string> | null = null,
-        preCalc: PreCalcCallback | null = null
+        inputTypeStore: Writable<string> | TNullish = null,
+        preCalc: PreCalcCallbackWithType | PreCalcCallbackNoType | TNullish = null
 </script>
 
 <div class="wdt-output pb-4">

@@ -3,14 +3,14 @@
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { net } from '$lib/methods'
     import { getSyncedStore } from '$lib/stores.js'
-    import type { NetInput, PreCalcCallback } from '$lib/types'
+    import type { CalcRow, NetInput, PreCalcCallbackNoType } from '$lib/types'
     import { Netmask } from 'netmask'
 
     const inputLabel = 'IPv4 / CIDR / Decimal'
     const inputSize = 1
     const inputValueStore = getSyncedStore('netInput', '')
 
-    const preCalc: PreCalcCallback = (value): NetInput => {
+    const preCalc: PreCalcCallbackNoType = (value): NetInput => {
         try {
             return new Netmask(value)
         } catch (e) {
@@ -18,7 +18,7 @@
         }
     }
 
-    const outputRows = [
+    const outputRows: CalcRow[] = [
         {
             cols: [
                 {title: 'IPv4', size: 1, method: net.dec_ip},

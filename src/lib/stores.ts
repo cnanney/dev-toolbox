@@ -1,7 +1,6 @@
 import { storageService } from '$lib/storage'
 import type { Writable } from 'svelte/store'
 
-type ValueOf<T> = T[keyof T]
 type StoreSubscribeCb<T> = (val: T) => unknown
 type StoreUpdateCb<T> = (val: T) => T
 type WritableStores = {
@@ -51,7 +50,7 @@ const keyedWritable = <Type>(key: string, defaultValue: Type): Writable<Type> =>
     return {subscribe, set, update}
 }
 
-export const getSyncedStore = <Type>(key: string, defaultValue: Type): Writable<Type> => {
+export const getSyncedStore = <Type>(key: keyof WritableStores, defaultValue: Type): Writable<Type> => {
     if (!Object.hasOwn(storesDirectory, key)) {
         storesDirectory[key] = keyedWritable(key, (storageService.get(key) ?? defaultValue))
     }

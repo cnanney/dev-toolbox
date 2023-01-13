@@ -22,7 +22,7 @@
 
         const wdt: Element = getWdtElement()
         const resizeObserver = new ResizeObserver(entries => {
-            handleWindowResize(entries.at(0).contentRect)
+            handleWindowResize(entries?.at(0)?.contentRect)
         })
 
         resizeObserver.observe(wdt)
@@ -39,7 +39,7 @@
     })
 
     afterNavigate(async (nav) => {
-        await storageService.set('lastNav', nav.to.route?.id).save()
+        await storageService.set('lastNav', nav.to?.route?.id).save()
     })
 
 </script>

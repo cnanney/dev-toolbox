@@ -3,11 +3,12 @@
     import CalcOutput from '$lib/components/CalcOutput.svelte'
     import { decode } from '$lib/methods'
     import { getSyncedStore } from '$lib/stores.js'
+    import type { CalcRow } from '$lib/types'
 
     const inputLabel = 'Text to Decode'
     const inputSize = 2
     const inputValueStore = getSyncedStore('decodeInput', '')
-    const outputRows = [
+    const outputRows: CalcRow[] = [
         {
             cols: [
                 {title: 'URI Decoded', size: 4, method: decode.uri, send: false},

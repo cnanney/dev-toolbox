@@ -5,7 +5,7 @@
     import EmojiModal from '$lib/components/EmojiModal.svelte'
     import allEmojiList from '$lib/data/emoji-with-gh.json'
     import { getSyncedStore } from '$lib/stores'
-    import type { Emoji } from '$lib/types'
+    import type { Emoji, InputToggle } from '$lib/types'
     import { chunkify, focusInput, scrollToTopById } from '$lib/util'
     import Fuse from 'fuse.js'
     import throttle from 'lodash-es/throttle'
@@ -16,7 +16,7 @@
 
     let searchDataset: Emoji[],
         searchResults: Emoji[] = [],
-        resultChunks: [Emoji[]] = [],
+        resultChunks: Emoji[][] = [],
         visibleEmoji: Emoji[] = [],
         chunkIndex: number = 0,
         fuse: Fuse<Emoji>,
@@ -67,7 +67,7 @@
 
     const inputLabel = 'Emoji Search'
     const inputSize = 1
-    const inputToggles = [
+    const inputToggles: InputToggle[] = [
         {
             text: 'GitHub Only',
             checked: $emojiGhOnly,

@@ -22,7 +22,7 @@
 </script>
 
 <div class="e-c">
-    <button class="e-c-i" title="Show Details" on:click={dispatch('showEmoji', {emoji})}>
+    <button class="e-c-i" title="Show Details" on:click={() => dispatch('showEmoji', {emoji})}>
         <img src={emojiPngPath(emoji)} alt={emoji.n}/>
     </button>
     <div class="e-c-n">{@html displayName}</div>

@@ -1,16 +1,17 @@
 <script lang="ts">
     import ClearButton from '$lib/components/ClearButton.svelte'
+    import type { InputModifier, InputOption, InputToggle, TNullish } from '$lib/types'
     import { initInputs, resizeTypeSelectorIfPresent } from '$lib/util'
     import { onMount } from 'svelte'
     import type { Writable } from 'svelte/store'
 
     export let inputLabel: string,
-        inputValueStore: Writable<any>,
-        inputTypeStore: Writable<any> | null = null,
+        inputValueStore: Writable<string>,
+        inputTypeStore: Writable<any> | TNullish = null,
         inputSize: number = 2,
-        inputOptions: object[] | null = null,
-        inputModifiers: object[] | null = null,
-        inputToggles: object[] | null = null
+        inputOptions: InputOption[] | TNullish = null,
+        inputModifiers: InputModifier[] | TNullish = null,
+        inputToggles: InputToggle[] | TNullish = null
 
     onMount(() => {
         initInputs()
@@ -29,7 +30,7 @@
                     <select bind:value={$inputTypeStore} on:change={resizeTypeSelectorIfPresent}
                             class="input-select mt-0 p-0 pr-6 pl-1 text-sm font-semibold text-gray-700 
                             dark:bg-gray-700 dark:text-gray-200 border-0 focus:ring-0 cursor-pointer unloaded">
-                        {#each inputOptions as option, i}
+                        {#each inputOptions as option}
                             <option value={option.value}>{option.text}</option>
                         {/each}
                     </select>
@@ -38,7 +39,7 @@
             <div class="flex divide-x space-x-2">
                 {#if inputModifiers}
                     <div class="flex space-x-1 text-xs text-blue-800 dark:text-blue-400">
-                        {#each inputModifiers as mod, i}
+                        {#each inputModifiers as mod}
                             {#if mod.callback}
                                 <button class="hover:underline" on:click={mod.callback}
                                 >{mod.text}</button>{mod.separator ?? ''}
@@ -49,7 +50,7 @@
                     </div>
                 {/if}
                 {#if inputToggles}
-                    {#each inputToggles as tog, i}
+                    {#each inputToggles as tog}
                         <label class="inline-flex items-center text-xs">
                             <input type="checkbox" class="gh-checkbox" bind:checked={tog.checked}
                                    on:change={tog.callback}>
