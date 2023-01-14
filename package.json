@@ -15,7 +15,7 @@
     "@sveltejs/adapter-static": "^1.0.0",
     "@sveltejs/kit": "^1.0.0",
     "@tailwindcss/forms": "^0.5.3",
-    "@types/chrome": "^0.0.204",
+    "@types/chrome": "^0.0.208",
     "@types/crypto-js": "^4.1.1",
     "@types/lodash-es": "^4.17.6",
     "@types/luxon": "^3.1.0",
@@ -30,7 +30,7 @@
     "npm": "^9.2.0",
     "postcss": "^8.4.20",
     "svelte": "^3.54.0",
-    "svelte-check": "^2.9.2",
+    "svelte-check": "^3.0.2",
     "svelte-preprocess": "^5.0.0",
     "sveltekit-adapter-chrome-extension": "^1.5.0",
     "tailwind-scrollbar": "^2.0.1",
@@ -38,7 +38,7 @@
     "tslib": "^2.4.1",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
-    "vitest": "^0.25.3"
+    "vitest": "^0.27.1"
   },
   "type": "module"
 }
