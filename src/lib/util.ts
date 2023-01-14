@@ -53,7 +53,7 @@ export function resizeTypeSelectorIfPresent() {
     tempSelect.remove()
 }
 
-export function handleWindowResize(rect?: DOMRectReadOnly) {
+export function handleWindowResize(rect?: DOMRectReadOnly | null) {
     rect && window.resizeBy(
         Math.ceil(rect.width - window.innerWidth),
         Math.ceil(rect.height - window.innerHeight)

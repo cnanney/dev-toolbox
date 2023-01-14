@@ -88,7 +88,7 @@
         if (modalVisible) {
             modalVisible = false
             // Back button while modal was open
-            if (nav.type !== 'link') {
+            if (nav.type === 'popstate') {
                 nav.cancel()
                 focusInput()
             }
