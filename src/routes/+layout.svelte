@@ -1,5 +1,6 @@
 <script lang="ts">
     import { afterNavigate } from '$app/navigation'
+    import { base } from '$app/paths'
     import Nav from '$lib/components/Nav.svelte'
     import { storageService } from '$lib/storage'
     import { getSyncedStore } from '$lib/stores'
@@ -43,6 +44,10 @@
     })
 
 </script>
+
+<svelte:head>
+    <link rel="icon" type="image/png" sizes="24x24" href="{base}/favicon.png">
+</svelte:head>
 
 <div class={classMap(['wdt flex flex-col m-auto bg-white dark:bg-gray-700',
     {'border dark:border-gray-900 mt-5': !runningAsExtension}
