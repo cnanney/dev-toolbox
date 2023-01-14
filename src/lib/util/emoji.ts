@@ -1,3 +1,4 @@
+import { base } from '$app/paths'
 import type { Emoji } from '$lib/types'
 
 export const emojiPngFileName = function (emoji: Emoji) {
@@ -38,6 +39,6 @@ export const emojiDisplayHtmlChars = (emoji: Emoji) => {
     }).join('')
 }
 
-export const emojiPngPath = (emoji: Emoji) => `/emoji-png/${emojiPngFileName(emoji)}.png`
+export const emojiPngPath = (emoji: Emoji) => `${base}/emoji-png/${emojiPngFileName(emoji)}.png`
 export const emojiGhCodes = (emoji: Emoji) => emoji.gh.map(name => `:${name}:`).join('\n')
 export const emojiHtmlChars = (emoji: Emoji) => emoji.qc.map((c) => `&#x${c};`).join('')

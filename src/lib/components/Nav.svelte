@@ -1,19 +1,19 @@
 <script lang="ts">
-    import { base } from '$app/paths'
     import { page } from '$app/stores'
     import { getSyncedStore } from '$lib/stores'
     import { createPopoutWindow } from '$lib/util'
+    import {base} from '$app/paths'
 
     const darkModeEnabled = getSyncedStore('darkModeEnabled', false)
 
     const nav = [
-        {id: 'hash', href: `${base}/hash`, name: 'Hash',},
-        {id: 'encode', href: `${base}/encode`, name: 'Encode',},
-        {id: 'decode', href: `${base}/decode`, name: 'Decode',},
-        {id: 'number', href: `${base}/number`, name: 'Number',},
-        {id: 'time', href: `${base}/time`, name: 'Time',},
-        {id: 'net', href: `${base}/net`, name: 'Net',},
-        {id: 'emoji', href: `${base}/emoji`, name: 'Emoji',}
+        {id: 'hash', href: `/hash`, name: 'Hash',},
+        {id: 'encode', href: `/encode`, name: 'Encode',},
+        {id: 'decode', href: `/decode`, name: 'Decode',},
+        {id: 'number', href: `/number`, name: 'Number',},
+        {id: 'time', href: `/time`, name: 'Time',},
+        {id: 'net', href: `/net`, name: 'Net',},
+        {id: 'emoji', href: `/emoji`, name: 'Emoji',},
     ]
 
     function toggleDarkMode() {
@@ -28,7 +28,7 @@
                 <div class="flex items-center">
                     <div class="flex text-sm font-semibold space-x-1.5 items-center">
                         {#each nav as route}
-                            <a href="{route.href}" data-sveltekit-preload-data="off"
+                            <a href="{base + route.href}" data-sveltekit-preload-data="off"
                                class="text-gray-900 dark:text-gray-200 rounded-md py-2 px-3
                                 {$page.route?.id === route.href
                                 ? 'bg-gray-100 dark:bg-gray-800'
