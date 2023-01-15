@@ -3,29 +3,30 @@ import { runningAsExtension } from '$lib/util'
 
 // Credit to https://github.com/bitwarden/clients/tree/master/apps/browser/src/services
 
-export const STORAGE_KEY = 'wdt'
+export const STORAGE_KEY = 'state'
 
+// Data is stored as single-level object with a key of "state"
 abstract class AbstractStorageService {
-    private _store: TObject = {}
+    private _state: TObject = {}
 
-    get store(): TObject {
-        return this._store
+    get state(): TObject {
+        return this._state
     }
 
-    set store(value: TObject) {
-        this._store = value
+    set state(value: TObject) {
+        this._state = value
     }
 
     async init(): Promise<void> {
-        this.store = (await this.load()) || {}
+        this.state = (await this.load()) || {}
     }
 
-    get(key?: string): any {
-        return resolveGet(this.store, key)
+    get(key?: string, defaultValue: any = null): any {
+        return resolveGet(this.state, key, defaultValue)
     }
 
     set(key: string, val: any): this {
-        this._store[key] = val
+        this._state[key] = val
 
         return this
     }
@@ -37,16 +38,11 @@ abstract class AbstractStorageService {
     abstract flush(): Promise<void>;
 }
 
-const resolveGet = (obj: TObject, key?: string): any => {
-    if (key == null) {
-        return obj
-    }
+const resolveGet = (obj: TObject, key?: string, defaultValue: any = null): any => {
+    if (key == null) return obj
+    let value = obj[key]
 
-    if (obj != null && obj[key] != null) {
-        return obj[key]
-    }
-
-    return null
+    return value === undefined ? defaultValue : value
 }
 
 class ChromeStorageService extends AbstractStorageService {
@@ -66,7 +62,7 @@ class ChromeStorageService extends AbstractStorageService {
     }
 
     async save(): Promise<void> {
-        const keyedObj = {[STORAGE_KEY]: this.store}
+        const keyedObj = {[STORAGE_KEY]: this.state}
         return new Promise<void>((resolve) => {
             this.chromeStorageApi.set(keyedObj, () => {
                 resolve()
@@ -97,7 +93,7 @@ class HtmlStorageService extends AbstractStorageService {
     }
 
     async save(): Promise<void> {
-        const json = JSON.stringify(this.store)
+        const json = JSON.stringify(this.state)
         window.sessionStorage.setItem(STORAGE_KEY, json)
         return Promise.resolve()
     }
