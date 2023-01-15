@@ -1,3 +1,5 @@
+import { base } from '$app/paths'
+
 export const isBrowser: boolean = typeof window !== 'undefined' && typeof document !== 'undefined'
 export const userAgent: string = isBrowser ? window.navigator.userAgent : ''
 export const isFirefox: boolean = isBrowser
@@ -90,4 +92,8 @@ export function* chunkify<T>(arr: T[], n: number): Generator<T[]> {
 export function scrollToTopById(id: string) {
     let eDiv = document.getElementById(id)
     if (eDiv) eDiv.scrollTop = 0
+}
+
+export function urlTo(path: string = '') {
+    return base.replace(/\/+$/, '') + '/' + path.replace(/^\/+/, '')
 }

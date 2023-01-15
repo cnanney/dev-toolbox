@@ -1,6 +1,5 @@
 <script lang="ts">
     import { afterNavigate } from '$app/navigation'
-    import { base } from '$app/paths'
     import Nav from '$lib/components/Nav.svelte'
     import { storageService } from '$lib/storage'
     import { getSyncedStore } from '$lib/stores'
@@ -10,6 +9,7 @@
         handleWindowResize,
         initInputs,
         runningAsExtension,
+        urlTo,
         waitForFonts
     } from '$lib/util'
     import { onMount } from 'svelte'
@@ -47,7 +47,7 @@
 </script>
 
 <svelte:head>
-    <link rel="icon" type="image/png" sizes="24x24" href="{base}/favicon.png">
+    <link rel="icon" type="image/png" sizes="24x24" href={urlTo('/favicon.png')}>
 </svelte:head>
 
 <div class={classMap(['wdt flex flex-col m-auto bg-white dark:bg-gray-700',

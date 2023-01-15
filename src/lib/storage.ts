@@ -21,7 +21,7 @@ abstract class AbstractStorageService {
         this.state = (await this.load()) || {}
     }
 
-    get(key?: string, defaultValue: any = null): any {
+    get(key?: string, defaultValue?: any): any {
         return resolveGet(this.state, key, defaultValue)
     }
 
@@ -38,7 +38,7 @@ abstract class AbstractStorageService {
     abstract flush(): Promise<void>;
 }
 
-const resolveGet = (obj: TObject, key?: string, defaultValue: any = null): any => {
+const resolveGet = (obj: TObject, key?: string, defaultValue?: any): any => {
     if (key == null) return obj
     let value = obj[key]
 

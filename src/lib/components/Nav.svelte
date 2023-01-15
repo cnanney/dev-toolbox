@@ -2,7 +2,7 @@
     import { page } from '$app/stores'
     import { getSyncedStore } from '$lib/stores'
     import { createPopoutWindow } from '$lib/util'
-    import {base} from '$app/paths'
+    import { urlTo } from '$lib/util.js'
 
     const darkModeEnabled = getSyncedStore('darkModeEnabled', false)
 
@@ -28,7 +28,7 @@
                 <div class="flex items-center">
                     <div class="flex text-sm font-semibold space-x-1.5 items-center">
                         {#each nav as route}
-                            <a href="{base + route.href}" data-sveltekit-preload-data="off"
+                            <a href={urlTo(route.href)} data-sveltekit-preload-data="off"
                                class="text-gray-900 dark:text-gray-200 rounded-md py-2 px-3
                                 {$page.route?.id === route.href
                                 ? 'bg-gray-100 dark:bg-gray-800'
