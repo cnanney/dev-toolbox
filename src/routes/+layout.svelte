@@ -15,6 +15,7 @@
     import { onMount } from 'svelte'
     import '../app.css'
 
+    const ghUrl = 'https://github.com/cnanney/dev-toolbox'
     const darkModeEnabled = getSyncedStore('darkModeEnabled', false)
 
     onMount(() => {
@@ -55,3 +56,10 @@
     <Nav/>
     <slot/>
 </div>
+
+{#if !runningAsExtension}
+    <p class="text-center mt-4">
+        <a href={ghUrl} class="font-light text-sm text-gray-700 
+        dark:text-gray-300 hover:underline">{ghUrl}</a>
+    </p>
+{/if}
