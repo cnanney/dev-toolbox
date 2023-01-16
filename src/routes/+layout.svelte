@@ -41,7 +41,7 @@
     })
 
     afterNavigate(async (nav) => {
-        await storageService.set('lastNav', nav.to?.route?.id).save()
+        await storageService.set('lastRoute', nav.to?.route?.id).save()
     })
 
 </script>

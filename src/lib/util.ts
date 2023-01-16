@@ -1,4 +1,5 @@
 import { base } from '$app/paths'
+import type { TObject } from '$lib/types'
 
 export const isBrowser: boolean = typeof window !== 'undefined' && typeof document !== 'undefined'
 export const userAgent: string = isBrowser ? window.navigator.userAgent : ''
@@ -96,4 +97,21 @@ export function scrollToTopById(id: string) {
 
 export function urlTo(path: string = '') {
     return base.replace(/\/+$/, '') + '/' + path.replace(/^\/+/, '')
+}
+
+const deepGet = (obj: TObject, path: string[]) => {
+    let length = path.length
+    for (let i = 0; i < length; i++) {
+        if (obj == null) return undefined
+        obj = obj[path[i]]
+    }
+
+    return length ? obj : undefined
+}
+
+export const dotGet = (object: TObject, path?: string , defaultValue?: any) => {
+    if (path == null) return object
+    let value = deepGet(object, path.split('.'))
+
+    return value === undefined ? defaultValue : value
 }

@@ -3,18 +3,19 @@ import type { Writable } from 'svelte/store'
 
 type StoreSubscribeCb<T> = (val: T) => unknown
 type StoreUpdateCb<T> = (val: T) => T
-type WritableStores = {
-    hashInput: Writable<string>,
-    encodeInput: Writable<string>,
-    decodeInput: Writable<string>,
-    numberInput: Writable<string>,
-    numberInputType: Writable<string>,
-    timeInput: Writable<string>,
-    timeInputType: Writable<string>,
-    netInput: Writable<string>,
-    emojiInput: Writable<string>,
-    emojiGhOnly: Writable<boolean>,
-    darkModeEnabled: Writable<boolean>,
+
+export type AppState = {
+    hashInput?: string,
+    encodeInput?: string,
+    decodeInput?: string,
+    numberInput?: string,
+    numberInputType?: string,
+    timeInput?: string,
+    timeInputType?: string,
+    netInput?: string,
+    emojiInput?: string,
+    emojiGhOnly?: boolean,
+    darkModeEnabled?: boolean,
 }
 
 const storesDirectory: { [k: string]: Writable<any> } = {}
@@ -50,7 +51,7 @@ const keyedWritable = <Type>(key: string, defaultValue: Type): Writable<Type> =>
     return {subscribe, set, update}
 }
 
-export const getSyncedStore = <Type>(key: keyof WritableStores, defaultValue: Type): Writable<Type> => {
+export const getSyncedStore = <Type>(key: keyof AppState, defaultValue: Type): Writable<Type> => {
     if (!Object.hasOwn(storesDirectory, key)) {
         storesDirectory[key] = keyedWritable(key, (storageService.get(key) ?? defaultValue))
     }

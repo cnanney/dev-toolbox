@@ -1,12 +1,15 @@
+import { runMigrations } from '$lib/migrations'
 import type { TObject } from '$lib/types'
-import { runningAsExtension } from '$lib/util'
-
-// Credit to https://github.com/bitwarden/clients/tree/master/apps/browser/src/services
+import { dotGet, runningAsExtension } from '$lib/util'
 
 export const STORAGE_KEY = 'state'
 
-// Data is stored as single-level object with a key of "state"
-abstract class AbstractStorageService {
+/**
+ * App data is stored under the "state" key
+ *
+ * Credit to https://github.com/bitwarden/clients/tree/master/apps/browser/src/services
+ */
+export abstract class AbstractStorageService {
     private _state: TObject = {}
 
     get state(): TObject {
@@ -19,10 +22,12 @@ abstract class AbstractStorageService {
 
     async init(): Promise<void> {
         this.state = (await this.load()) || {}
+
+        return this.migrate()
     }
 
     get(key?: string, defaultValue?: any): any {
-        return resolveGet(this.state, key, defaultValue)
+        return dotGet(this.state, key, defaultValue)
     }
 
     set(key: string, val: any): this {
@@ -31,18 +36,25 @@ abstract class AbstractStorageService {
         return this
     }
 
+    async migrate(): Promise<void> {
+        runMigrations(this)
+
+        return this.save()
+    }
+
+    isEmpty(): boolean {
+        return Object.keys(this.state).length === 0
+    }
+
+    has(key: string): boolean {
+        return this.get(key) !== undefined
+    }
+
     abstract load(): Promise<TObject | null>;
 
     abstract save(): Promise<void>;
 
     abstract flush(): Promise<void>;
-}
-
-const resolveGet = (obj: TObject, key?: string, defaultValue?: any): any => {
-    if (key == null) return obj
-    let value = obj[key]
-
-    return value === undefined ? defaultValue : value
 }
 
 class ChromeStorageService extends AbstractStorageService {
@@ -81,7 +93,7 @@ class ChromeStorageService extends AbstractStorageService {
 
 class HtmlStorageService extends AbstractStorageService {
     async load(): Promise<TObject | null> {
-        let json = window.sessionStorage.getItem(STORAGE_KEY)
+        let json = window.localStorage.getItem(STORAGE_KEY)
 
         if (json != null) {
             const obj = JSON.parse(json)
@@ -94,12 +106,28 @@ class HtmlStorageService extends AbstractStorageService {
 
     async save(): Promise<void> {
         const json = JSON.stringify(this.state)
-        window.sessionStorage.setItem(STORAGE_KEY, json)
+        window.localStorage.setItem(STORAGE_KEY, json)
+
         return Promise.resolve()
     }
 
     async flush(): Promise<void> {
-        window.sessionStorage.removeItem(STORAGE_KEY)
+        window.localStorage.removeItem(STORAGE_KEY)
+
+        return Promise.resolve()
+    }
+}
+
+export class MemoryStorageService extends AbstractStorageService {
+    async load(): Promise<TObject | null> {
+        return Promise.resolve({} as TObject)
+    }
+
+    async save(): Promise<void> {
+        return Promise.resolve()
+    }
+
+    async flush(): Promise<void> {
         return Promise.resolve()
     }
 }

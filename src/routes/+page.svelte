@@ -5,6 +5,6 @@
     import { onMount } from 'svelte'
 
     onMount(() => {
-        goto(urlTo(storageService.get('lastNav') ?? '/hash'))
+        goto(urlTo(storageService.get('lastRoute') ?? '/hash'))
     })
 </script>

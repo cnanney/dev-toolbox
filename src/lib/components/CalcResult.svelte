@@ -9,7 +9,7 @@
         inputTypeStore: Writable<any> | TNullish,
         preCalc: PreCalcCallbackWithType | PreCalcCallbackNoType | TNullish
 
-    $: calcInput = (preCalc) ? preCalc($inputValueStore, $inputTypeStore!) : $inputValueStore
+    $: calcInput = preCalc ? preCalc($inputValueStore, $inputTypeStore!) : $inputValueStore
     $: result = runCalc(calc.method, calcInput)
 
     function runCalc(fn: (input: any) => string, value: any): string {
