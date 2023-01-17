@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { CalcResult, PreCalcCallbackNoType, PreCalcCallbackWithType, TNullish } from '$lib/types'
-    import { isFirefox, resizeTypeSelectorIfPresent } from '$lib/util'
+    import { resizeTypeSelectorIfPresent } from '$lib/util'
     import { tick } from 'svelte'
     import type { Writable } from 'svelte/store'
 
@@ -26,7 +26,7 @@
             inputTypeStore.set(calc.sendInputType)
             tick().then(resizeTypeSelectorIfPresent)
         }
-        inputValueStore.set(result)
+        inputValueStore.set(String(result))
     }
 
     function copyToClipboard(event: Event): void {
@@ -70,5 +70,5 @@
             </a>
         </div>
     </div>
-    <textarea class="{!isFirefox ? 'py-2 px-3' : 'p-2'}" rows={calc.size} readonly>{result}</textarea>
+    <textarea rows={calc.size} readonly>{result}</textarea>
 </div>

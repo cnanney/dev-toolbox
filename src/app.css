@@ -39,6 +39,8 @@ select.unloaded {
     bg-gray-50 dark:bg-gray-600 dark:text-gray-200 focus:ring-0 focus:border-black
     scrollbar scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-500
     overflow-x-hidden;
+    line-height: 1rem;
+    padding: .5rem .7rem .4rem;
 }
 
 /* EMOJI */
