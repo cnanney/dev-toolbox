@@ -18,6 +18,9 @@
     const ghUrl = 'https://github.com/cnanney/dev-toolbox'
     const darkModeEnabled = getSyncedStore('darkModeEnabled', false)
 
+    let showFooter = false,
+        isLoaded = false
+
     onMount(() => {
 
         waitForFonts().then(initInputs)
@@ -37,6 +40,9 @@
             }
         })
 
+        showFooter = !runningAsExtension
+        isLoaded = true
+
         return () => resizeObserver.unobserve(wdt)
     })
 
@@ -51,15 +57,14 @@
 </svelte:head>
 
 <div class={classMap(['wdt flex flex-col m-auto bg-white dark:bg-gray-700',
-    {'border dark:border-gray-900 mt-5': !runningAsExtension}
+    {'border dark:border-gray-900 mt-5': !runningAsExtension},
+    {'hidden': !isLoaded}
 ])}>
     <Nav/>
     <slot/>
 </div>
 
-{#if !runningAsExtension}
-    <p class="text-center mt-4">
-        <a href={ghUrl} class="font-light text-sm text-gray-700 
-        dark:text-gray-300 hover:underline">{ghUrl}</a>
-    </p>
-{/if}
+<p class={classMap(['text-center mt-4', {'hidden': !showFooter}])}>
+    <a href={ghUrl} class="font-light text-sm text-gray-700 
+    dark:text-gray-300 hover:underline">{ghUrl}</a>
+</p>
