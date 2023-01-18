@@ -76,8 +76,8 @@ export async function createPopoutWindow() {
         await chrome.windows.create({
             url: href,
             type: 'popup',
-            width: initialW,
-            height: initialH,
+            width: Math.ceil(initialW),
+            height: Math.ceil(initialH),
         })
     }
 
