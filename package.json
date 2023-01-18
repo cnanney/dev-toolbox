@@ -6,7 +6,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "build:ext": "BUILD_MODE=ext vite build && node build_ext.js",
-    "build:gh": "BUILD_MODE=gh vite build && node build_gh.js",
+    "build:gh": "BUILD_MODE=gh vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",

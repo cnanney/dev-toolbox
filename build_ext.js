@@ -4,6 +4,9 @@ import * as child from 'child_process'
 import { readFileSync, unlinkSync, writeFileSync } from 'fs'
 import glob from 'tiny-glob'
 
+// Build functions `hash`, `removeInlineScripts`, and `removeManifestFiles`
+// sourced from https://github.com/michmich112/sveltekit-adapter-chrome-extension
+
 function hash(value) {
     let hash = 5381
     let i = value.length
@@ -16,8 +19,6 @@ function hash(value) {
 
     return (hash >>> 0).toString(36)
 }
-
-// Credit to https://github.com/michmich112/sveltekit-adapter-chrome-extension
 
 async function removeInlineScripts(directory) {
     console.log('Removing Inline Scripts')
@@ -83,7 +84,6 @@ async function createZipArchive(browserName) {
     const outputFile = `./out/zip/${browserName}.zip`
     console.log(`Creating ${outputFile}.`)
 
-    // This library is terrible with function signatures
     // noinspection JSCheckFunctionSignatures
     const zip = new AdmZip()
     // noinspection JSCheckFunctionSignatures

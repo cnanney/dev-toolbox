@@ -43,5 +43,6 @@ describe('test emoji indexing', () => {
         )
     })
 
-    // verdict: not worth it
+    // Verdict: not worth it
+    // Do not want to bundle pre-built index at this time either
 })

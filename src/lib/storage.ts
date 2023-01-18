@@ -2,13 +2,13 @@ import { runMigrations } from '$lib/migrations'
 import type { TObject } from '$lib/types'
 import { dotGet, runningAsExtension } from '$lib/util'
 
+// App data is stored under a single "state" key
 export const STORAGE_KEY = 'state'
 
-/**
- * App data is stored under the "state" key
- *
- * Credit to https://github.com/bitwarden/clients/tree/master/apps/browser/src/services
- */
+
+// Storage service classes inspired by and modified from
+// https://github.com/bitwarden/clients/tree/master/apps/browser/src/services
+
 export abstract class AbstractStorageService {
     private _state: TObject = {}
 

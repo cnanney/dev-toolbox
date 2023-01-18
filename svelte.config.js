@@ -1,10 +1,9 @@
 //import adapter from '@sveltejs/adapter-auto';
-import staticAdapter from '@sveltejs/adapter-static';
-import chromeAdapter from 'sveltekit-adapter-chrome-extension';
-import {vitePreprocess} from '@sveltejs/kit/vite';
-import preprocess from "svelte-preprocess";
+import staticAdapter from '@sveltejs/adapter-static'
+import { vitePreprocess } from '@sveltejs/kit/vite'
+import preprocess from 'svelte-preprocess'
 
-const gh = process.env.BUILD_MODE === 'gh';
+const MODE = process.env.BUILD_MODE ?? 'default'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -19,18 +18,18 @@ const config = {
 
     onwarn: (warning, handler) => {
         if (warning.code.startsWith('a11y-')) {
-            return;
+            return
         }
-        handler(warning);
+        handler(warning)
     },
 
     kit: {
         paths: {
-            base: gh ? '/wdt-svelte' : '',
+            base: MODE === 'gh' ? '/wdt-svelte' : '',
         },
         adapter: staticAdapter(),
         appDir: 'app',
     }
-};
+}
 
-export default config;
+export default config

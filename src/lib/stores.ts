@@ -20,6 +20,9 @@ export type AppState = {
 
 const storesDirectory: { [k: string]: Writable<any> } = {}
 
+// Help with custom stores from
+// https://svelte-recipes.netlify.app/stores/#a-custom-implementation-of-the-builtin-store
+
 const keyedWritable = <Type>(key: string, defaultValue: Type): Writable<Type> => {
     let _val = defaultValue
     const subs: StoreSubscribeCb<Type>[] = []
