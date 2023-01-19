@@ -21,12 +21,12 @@ const oldData = {
     onlyGithubEmoji: true,
 }
 
-describe('migrations for v1.1.0 format', () => {
+describe('migrations for v1.1.0 format', async () => {
     const store = new MemoryStorageService
     const version = '1.1.0'
     store.state = oldData
 
-    runMigrations(store, version)
+    await runMigrations(store, version)
 
     it('remaps values', () => {
         expect(store.get('hashInput')).toBe('123')
@@ -45,13 +45,13 @@ describe('migrations for v1.1.0 format', () => {
     })
 })
 
-describe('migrations skipped if version match', () => {
+describe('migrations skipped if version match', async () => {
     const store = new MemoryStorageService
     const version = '1.1.0'
     store.state = oldData
     store.set('appVersion', version)
 
-    runMigrations(store, version) // nothing should happen
+    await runMigrations(store, version) // nothing should happen
 
     it('leaves values alone', () => {
         expect(store.get('inputs.hash')).toBe('123')

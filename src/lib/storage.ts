@@ -37,9 +37,7 @@ export abstract class AbstractStorageService {
     }
 
     async migrate(): Promise<void> {
-        runMigrations(this)
-
-        return this.save()
+        return runMigrations(this)
     }
 
     isEmpty(): boolean {

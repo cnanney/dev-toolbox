@@ -46,10 +46,10 @@ const migrations: Migration[] = [
     },
 ]
 
-export function runMigrations(store: AbstractStorageService, toVersion?: string): void {
+export function runMigrations(store: AbstractStorageService, toVersion?: string): Promise<void> {
     const storedVersion = store.get('appVersion', '1.0.0')
     toVersion ??= APP_VERSION
-    if (storedVersion === toVersion) return
+    if (storedVersion === toVersion) return Promise.resolve()
 
     if (!store.isEmpty()) {
         let index = migrations.findIndex(m => isSemverGreater(m.version, storedVersion))
@@ -61,5 +61,5 @@ export function runMigrations(store: AbstractStorageService, toVersion?: string)
         }
     }
 
-    store.set('appVersion', toVersion)
+    return store.set('appVersion', toVersion).save()
 }
