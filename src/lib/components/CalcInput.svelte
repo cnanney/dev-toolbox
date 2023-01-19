@@ -1,20 +1,21 @@
 <script lang="ts">
+    import CalcInputTypeSelector from '$lib/components/CalcInputTypeSelector.svelte'
     import ClearButton from '$lib/components/ClearButton.svelte'
     import type { InputModifier, InputOption, InputToggle, TNullish } from '$lib/types'
-    import { initInputs, resizeTypeSelectorIfPresent } from '$lib/util'
+    import { focusInput } from '$lib/util'
     import { onMount } from 'svelte'
     import type { Writable } from 'svelte/store'
 
     export let inputLabel: string,
         inputValueStore: Writable<string>,
-        inputTypeStore: Writable<any> | TNullish = null,
+        inputTypeStore: Writable<string> | TNullish = null,
         inputSize: number = 2,
         inputOptions: InputOption[] | TNullish = null,
         inputModifiers: InputModifier[] | TNullish = null,
         inputToggles: InputToggle[] | TNullish = null
 
     onMount(() => {
-        initInputs()
+        setTimeout(focusInput, 10)
     })
 </script>
 
@@ -26,14 +27,8 @@
                 <label for="wdtInput"
                        class="block text-sm font-semibold text-gray-700 dark:text-gray-200"
                 >{inputLabel}</label>
-                {#if inputOptions}
-                    <select bind:value={$inputTypeStore} on:change={resizeTypeSelectorIfPresent}
-                            class="input-select mt-0 p-0 pr-6 pl-1 text-sm font-semibold text-gray-700 
-                            dark:bg-gray-700 dark:text-gray-200 border-0 focus:ring-0 cursor-pointer unloaded">
-                        {#each inputOptions as option}
-                            <option value={option.value}>{option.text}</option>
-                        {/each}
-                    </select>
+                {#if inputTypeStore && inputOptions}
+                    <CalcInputTypeSelector {inputTypeStore} {inputOptions}/>
                 {/if}
             </div>
             <div class="flex divide-x space-x-2">

@@ -3,15 +3,7 @@
     import Nav from '$lib/components/Nav.svelte'
     import { storageService } from '$lib/storage'
     import { getSyncedStore } from '$lib/stores'
-    import {
-        classMap,
-        getWdtElement,
-        handleWindowResize,
-        initInputs,
-        runningAsExtension,
-        urlTo,
-        waitForFonts
-    } from '$lib/util'
+    import { classMap, getWdtElement, handleWindowResize, runningAsExtension, urlTo } from '$lib/util'
     import { onMount } from 'svelte'
     import '../app.css'
 
@@ -23,10 +15,8 @@
 
     onMount(() => {
 
-        waitForFonts().then(initInputs)
-
         const wdt: Element = getWdtElement()
-        const resizeObserver = new ResizeObserver(entries => {
+        const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
             handleWindowResize(entries?.at(0)?.contentRect)
         })
 

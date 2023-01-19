@@ -16,11 +16,7 @@ export const hasClipboardItem: boolean = typeof ClipboardItem !== 'undefined'
 export const getWdtElement = () => document.querySelector('.wdt') as HTMLElement
 export const getInput = () => document.getElementById('wdtInput') as HTMLTextAreaElement
 export const focusInput = (): void => getInput()?.focus()
-export const waitForFonts = async (): Promise<FontFaceSet> => await document.fonts.ready
-export const initInputs = () => {
-    resizeTypeSelectorIfPresent()
-    setTimeout(focusInput, 10)
-}
+export const fontsLoaded = async (): Promise<FontFaceSet> => await document.fonts.ready
 
 export function classMap(classArray: (string | { [k: string]: any })[]): string {
     const classes: string[] = []
@@ -109,7 +105,7 @@ const deepGet = (obj: TObject, path: string[]) => {
     return length ? obj : undefined
 }
 
-export const dotGet = (object: TObject, path?: string , defaultValue?: any) => {
+export const dotGet = (object: TObject, path?: string, defaultValue?: any) => {
     if (path == null) return object
     let value = deepGet(object, path.split('.'))
 
