@@ -13,9 +13,11 @@
 5. Format and inspect IPv4/CIDR addresses
 6. Search all v13.1 emoji with quick copying
 
-Dev Toolbox runs entirely offline with no external assets, and only requires local storage permission to remember the last tool used and its input. Full source code included in this repo.
+Dev Toolbox runs entirely offline, makes no external requests, and only requires local storage permission to remember the last tool used and its input.
 
-This extension is built with [SvelteKit](https://kit.svelte.dev/), and you can try it out online: https://cnanney.github.io/dev-toolbox/
+It's a [SvelteKit](https://kit.svelte.dev/) app and is also deployed to GitHub Pages, so you can try it out online: https://cnanney.github.io/dev-toolbox/
+
+More tools coming in v2.
 
 # Installation
 
@@ -44,3 +46,4 @@ Differences in Firefox:
 <p align="center"><img src="https://raw.githubusercontent.com/cnanney/dev-toolbox/master/docs/img/emoji-light.png" alt="Instant emoji search" title="Instant emoji search"></p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/cnanney/dev-toolbox/master/docs/img/emoji-modal-dark.png" alt="Emoji details and quick copy" title="Emoji details and quick copy"></p>
+
