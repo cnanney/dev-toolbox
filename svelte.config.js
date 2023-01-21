@@ -25,7 +25,7 @@ const config = {
 
     kit: {
         paths: {
-            base: MODE === 'gh' ? '/wdt-svelte' : '',
+            base: MODE === 'gh' ? '/dev-toolbox' : '',
         },
         adapter: staticAdapter(),
         appDir: 'app',
