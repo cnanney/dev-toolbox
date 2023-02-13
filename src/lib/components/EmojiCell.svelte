@@ -1,23 +1,43 @@
 <script lang="ts">
     import type { Emoji } from '$lib/types'
-    import { emojiGhCodes, emojiPngPath } from '$lib/util/emoji'
+    import { mergeOverlappingRanges } from '$lib/util'
+    import { emojiGhCodes, emojiPngPath, findTokenMatches } from '$lib/util/emoji'
     import { createEventDispatcher } from 'svelte'
-    import type { Writable } from 'svelte/store'
 
     const dispatch = createEventDispatcher()
 
-    export let emoji: Emoji, emojiInput: Writable<string>
+    export let emoji: Emoji,
+        searchTokens: string[]
 
-    function highlightedName(searchString: string) {
-        let highlighted = emoji.n.toLowerCase()
-        searchString.toLowerCase().split(/\s+/g).map((chunk) => {
-            if (chunk) highlighted = highlighted.replaceAll(chunk, `<span>${chunk}</span>`)
-        })
+    function highlightedName(tokens: string[] = []) {
+        let name = emoji.n.toLowerCase(),
+            // Fuse indices are included in the Emoji object, but its default
+            // fuzzy search is search too verbose for highlighting, so we'll
+            // make our own ;)
+            // 
+            // indices = emoji.fi ?? [],
+            indices = findTokenMatches(name, tokens),
+            merged = mergeOverlappingRanges(indices),
+            nextStartIndex = 0,
+            out = []
 
-        return highlighted
+        for (let range of merged) {
+            const endIndex = range[1] + 1
+            out.push(...[
+                name.substring(nextStartIndex, range[0]),
+                '<span>',
+                name.substring(range[0], endIndex),
+                '</span>'
+            ])
+            nextStartIndex = endIndex
+        }
+
+        out.push(name.substring(nextStartIndex))
+
+        return out.join('')
     }
 
-    $: displayName = highlightedName($emojiInput)
+    $: displayName = highlightedName(searchTokens)
 
 </script>
 

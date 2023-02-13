@@ -1,4 +1,4 @@
-import type { Emoji } from '$lib/types'
+import type { Emoji, RangeIndices } from '$lib/types'
 import { urlTo } from '$lib/util'
 
 export const emojiPngFileName = function (emoji: Emoji) {
@@ -42,3 +42,36 @@ export const emojiDisplayHtmlChars = (emoji: Emoji) => {
 export const emojiPngPath = (emoji: Emoji) => urlTo(`/emoji-png/${emojiPngFileName(emoji)}.png`)
 export const emojiGhCodes = (emoji: Emoji) => emoji.gh.map(name => `:${name}:`).join('\n')
 export const emojiHtmlChars = (emoji: Emoji) => emoji.qc.map((c) => `&#x${c};`).join('')
+
+export function compileSearchTokens(searchInput: string) {
+    const RE_NEGATION = /^!/
+    const RE_REMOVE = /[^a-z0-9^! $:-]/g
+
+    return searchInput
+        .toLowerCase()
+        // Capture parenthesis groups, split on `spaces` (AND), and `|` (OR)
+        .split(/([!^=]*?".+"[$]?)|\s+|\|/g)
+        .filter(s => {
+            // Remove blank and undefined
+            if (!s) return false
+            // Remove negated text, but keep single char
+            if (RE_NEGATION.test(s)) return s.length === 1
+            
+            return true
+        })
+        // Clean
+        .map(s => s ? s.replace(RE_REMOVE, '') : '')
+}
+
+export function findTokenMatches(input: string, tokens: string[]) {
+    let indices: RangeIndices = [], match
+
+    tokens.forEach(token => {
+        const tokenRE = new RegExp(token, 'g')
+        while (match = tokenRE.exec(input)) {
+            indices.push([match.index, tokenRE.lastIndex - 1])
+        }
+    })
+
+    return indices
+}

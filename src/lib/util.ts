@@ -1,5 +1,5 @@
 import { base } from '$app/paths'
-import type { TObject } from '$lib/types'
+import type { RangeIndices, TObject } from '$lib/types'
 
 export const isBrowser: boolean = typeof window !== 'undefined' && typeof document !== 'undefined'
 export const userAgent: string = isBrowser ? window.navigator.userAgent : ''
@@ -21,6 +21,7 @@ export const fontsLoaded = async (): Promise<FontFaceSet> => await document.font
 export function classMap(classArray: (string | { [k: string]: any })[]): string {
     const classes: string[] = []
     classArray.forEach(el => {
+        // noinspection TypeScriptValidateTypes
         classes.push(typeof el === 'string'
             ? el
             : Object.entries(el)
@@ -95,7 +96,7 @@ export function urlTo(path: string = '') {
     return base.replace(/\/+$/, '') + '/' + path.replace(/^\/+/, '')
 }
 
-const deepGet = (obj: TObject, path: string[]) => {
+const deepGet = (obj: TObject | null, path: string[]) => {
     let length = path.length
     for (let i = 0; i < length; i++) {
         if (obj == null) return undefined
@@ -110,4 +111,29 @@ export const dotGet = (object: TObject, path?: string, defaultValue?: any) => {
     let value = deepGet(object, path.split('.'))
 
     return value === undefined ? defaultValue : value
+}
+
+// Credit: Alex Irabor, https://onecompiler.com/javascript/3xbjgxv4r
+export function mergeOverlappingRanges(array: RangeIndices) {
+    if (!array.length) return array
+
+    let sortedIntervals = array.sort((a, b) => a[0] - b[0])
+    let mergedIntervals = []
+    let currentInterval = sortedIntervals[0]
+
+    mergedIntervals.push(currentInterval)
+
+    for (let nextInterval of sortedIntervals) {
+        const [_, currentIntervalEnd] = currentInterval
+        const [nextIntervalStart, nextIntervalEnd] = nextInterval
+
+        if (currentIntervalEnd >= nextIntervalStart) {
+            currentInterval[1] = Math.max(currentIntervalEnd, nextIntervalEnd)
+        } else {
+            currentInterval = nextInterval
+            mergedIntervals.push(currentInterval)
+        }
+    }
+
+    return mergedIntervals
 }

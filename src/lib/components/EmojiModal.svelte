@@ -73,7 +73,7 @@
 
             <div class="grid grid-cols-2 text-gray-800 dark:text-gray-200 content-center">
                 <img class="w-max mx-auto" src={emojiPngPath(emoji)} title="Google PNG" alt="Google PNG">
-                <span class="text-6xl" title="Your Browser">{@html emojiHtmlChars(emoji)}</span>
+                <div><span class="text-6xl" title="Your Browser">{@html emojiHtmlChars(emoji)}</span></div>
                 <div class="uppercase text-sm mt-2">Image</div>
                 <div class="uppercase text-sm mt-2">Browser</div>
 

@@ -4,6 +4,8 @@ import type { Netmask } from 'netmask'
 export type TKey = string | number | symbol
 export type TObject = Record<TKey, any>
 export type TNullish = null | undefined;
+export type RangeTuple = [number, number]
+export type RangeIndices = RangeTuple[]
 
 export type HashInput = string
 export type EncodeInput = string
@@ -51,6 +53,7 @@ export type Emoji = {
     g: number, // group
     sg: number, // sub group
     gh: string[] // github aliases
+    fi?: ReadonlyArray<RangeTuple> // fuse search result indices to highlight
 }
 
 export type TimeTypeFromFormats = 'fromSeconds' | 'fromMillis' | 'fromISO' | 'fromSQL' | 'fromHTTP'

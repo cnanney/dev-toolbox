@@ -7,6 +7,7 @@
     import { getSyncedStore } from '$lib/stores'
     import type { Emoji, InputToggle } from '$lib/types'
     import { chunkify, focusInput, scrollToTopById } from '$lib/util'
+    import { compileSearchTokens } from '$lib/util/emoji'
     import Fuse from 'fuse.js'
     import throttle from 'lodash-es/throttle'
     import { onMount } from 'svelte'
@@ -15,13 +16,15 @@
     const emojiGhOnly = getSyncedStore('emojiGhOnly', false)
 
     let searchDataset: Emoji[],
-        searchResults: Emoji[] = [],
-        resultChunks: Emoji[][] = [],
+        foundEmoji: Emoji[] = [],
         visibleEmoji: Emoji[] = [],
+        resultChunks: Emoji[][] = [],
         chunkIndex: number = 0,
         fuse: Fuse<Emoji>,
         modalVisible: boolean = false,
         modalEmoji: Emoji
+
+    $: searchTokens = compileSearchTokens($emojiInput)
 
     const ghOnlyEmojiList = allEmojiList.filter((el: Emoji) => el.gh.length)
     const chunkSize = 50
@@ -32,6 +35,7 @@
         threshold: 0.0,
         ignoreLocation: true,
         useExtendedSearch: true,
+        includeMatches: true
     }
     const handleScroll = throttle((e) => {
         if (
@@ -50,8 +54,10 @@
 
     function doSearch() {
         modalVisible = false
-        searchResults = $emojiInput ? fuse.search($emojiInput).map(r => r.item) : searchDataset
-        resultChunks = [...chunkify(searchResults, chunkSize)]
+        foundEmoji = $emojiInput
+            ? fuse.search($emojiInput).map(r => ({...r.item, fi: r.matches?.at(0)?.indices ?? []}))
+            : searchDataset
+        resultChunks = [...chunkify(foundEmoji, chunkSize)]
         visibleEmoji = resultChunks.length ? [...resultChunks[chunkIndex = 0]] : []
         scrollToTopById('emojis')
     }
@@ -110,13 +116,13 @@
              class="px-4 mt-1 scrollbar scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-500 overflow-y-auto">
             <div class="pb-3 grid grid-cols-3 gap-3 justify-items-stretch">
                 {#each visibleEmoji as emoji (emoji.n)}
-                    <EmojiCell {emoji} {emojiInput} on:showEmoji={openModal}/>
+                    <EmojiCell {emoji} {searchTokens} on:showEmoji={openModal}/>
                 {/each}
             </div>
         </div>
         <div class="e-f flex bg-gray-50 dark:bg-gray-800 dark:text-gray-400 py-1.5 px-3 text-xs justify-between shadow-inner">
             <span>Emoji v13.1, Fully-Qualified</span>
-            <span>{'Count: ' + Intl.NumberFormat()['format'](searchResults.length)}</span>
+            <span>{'Count: ' + Intl.NumberFormat()['format'](foundEmoji.length)}</span>
         </div>
     </div>
     {#if modalVisible}
