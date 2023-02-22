@@ -15,7 +15,7 @@
 
 Dev Toolbox runs entirely offline, makes no external requests, and only requires local storage permission to remember the last tool used and its input.
 
-It's a [SvelteKit](https://kit.svelte.dev/) app and is also deployed to GitHub Pages, so you can try it out online: https://cnanney.github.io/dev-toolbox/
+Try it online: https://cnanney.github.io/dev-toolbox/
 
 More tools coming in v2.
 
