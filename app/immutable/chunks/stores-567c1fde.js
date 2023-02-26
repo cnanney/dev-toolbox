@@ -1,1 +1,0 @@
-import{s as i}from"./storage-85ea596a.js";const c={},f=(s,r)=>{let e=r;const n=[],u=t=>{i.set(s,t).save().then()},d=t=>(n.push(t),t(e),()=>{const o=n.findIndex(p=>p===t);n.splice(o,1)}),a=t=>{e=t,n.forEach(o=>o(e)),u(e)};return{subscribe:d,set:a,update:t=>{a(t(e))}}},l=(s,r)=>(Object.hasOwn(c,s)||(c[s]=f(s,i.get(s)??r)),c[s]);export{l as g};
