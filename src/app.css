@@ -49,6 +49,10 @@ select.unloaded {
     height: 390px;
 }
 
+.e-byte.control {
+    @apply border-b border-gray-300 dark:border-gray-500 border-dashed cursor-help
+}
+
 .gh-checkbox {
     @apply w-3.5 h-3.5 shadow-sm focus:ring focus:ring-offset-0
     border-gray-300 dark:border-gray-700
