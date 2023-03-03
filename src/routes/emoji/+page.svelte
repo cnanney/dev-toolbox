@@ -121,7 +121,7 @@
             </div>
         </div>
         <div class="e-f flex bg-gray-50 dark:bg-gray-800 dark:text-gray-400 py-1.5 px-3 text-xs justify-between shadow-inner">
-            <span>Emoji v13.1, Fully-Qualified</span>
+            <span>Emoji v15.0, Fully-Qualified</span>
             <span>{'Count: ' + Intl.NumberFormat()['format'](foundEmoji.length)}</span>
         </div>
     </div>
