@@ -139,7 +139,7 @@
     <div class="flex flex-col relative">
         <div class="relative">
             <div id="emojis" on:scroll={handleScroll}
-                 class="relative px-4 scrollbar scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-500 overflow-y-auto">
+                 class="relative px-4 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-500 overflow-y-auto">
                 <div class="pb-3 grid grid-cols-3 gap-3 justify-items-stretch">
                     {#each visibleEmoji as emoji (emoji.n)}
                         <EmojiCell {emoji} {searchTokens} on:showEmoji={openModal}/>
