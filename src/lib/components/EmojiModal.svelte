@@ -1,4 +1,5 @@
 <script lang="ts">
+    import CloseButton from '$lib/components/CloseButton.svelte'
     import SecondaryButton from '$lib/components/SecondaryButton.svelte'
     import categories from '$lib/data/emoji-category-map.json'
     import type { Emoji } from '$lib/types'
@@ -36,10 +37,6 @@
         navigator.clipboard.writeText(`:${emoji.gh[0]}:`)
     }
 
-    function closeModal() {
-        dispatch('close')
-    }
-
 </script>
 
 <div class="absolute bg-white dark:bg-gray-700 inset-0 align-middle px-4" out:fade={{duration: 200}}>
@@ -48,17 +45,9 @@
          aria-labelledby="modalTitle"
          aria-describedby="modalDescription"
     >
-        <button type="button"
-                class="absolute top-0 right-0 text-gray-500 dark:text-gray-300"
-                aria-label="Close modal"
-                title="Close"
-                on:click={closeModal}
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
+        <div class="absolute top-0 right-0">
+            <CloseButton on:close />
+        </div>
 
         <div class="p-4 pb-6 flex flex-col text-center justify-between h-full">
 

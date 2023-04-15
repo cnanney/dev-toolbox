@@ -64,41 +64,41 @@
 
     const inputModifiers: InputModifier[] = [
         {
-            text: 'Now',
+            html: 'Now',
             callback: () => adjust(),
             separator: ','
         },
         {
-            text: '+1',
+            html: '+1',
             separator: ''
         },
         {
-            text: 'sec',
+            html: 'sec',
             callback: () => adjust('seconds'),
             separator: ','
         },
         {
-            text: 'min',
+            html: 'min',
             callback: () => adjust('minutes'),
             separator: ','
         },
         {
-            text: 'hour',
+            html: 'hour',
             callback: () => adjust('hours'),
             separator: ','
         },
         {
-            text: 'day',
+            html: 'day',
             callback: () => adjust('days'),
             separator: ','
         },
         {
-            text: 'month',
+            html: 'month',
             callback: () => adjust('months'),
             separator: ','
         },
         {
-            text: 'year',
+            html: 'year',
             callback: () => adjust('years'),
         },
     ]

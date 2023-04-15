@@ -24,7 +24,7 @@ export function classMap(classArray: (string | { [k: string]: any })[]): string 
         // noinspection TypeScriptValidateTypes
         classes.push(typeof el === 'string'
             ? el
-            : Object.entries(el)
+            : Object.entries(el || {})
                 .filter(([name, value]) => name !== '' && value)
                 .map(([name]) => name)
                 .join(' ')

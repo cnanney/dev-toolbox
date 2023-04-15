@@ -8,6 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
+        sm: ['0.875rem', {lineHeight: '1.25rem'}],
+        vs: ['0.825rem', {lineHeight: '1.25rem'}],
+        xs: ['0.75rem', {lineHeight: '1rem'}],
         xxs: ['0.7rem', {lineHeight: '1rem'}],
       },
       fontFamily: {

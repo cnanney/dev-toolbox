@@ -31,7 +31,7 @@ export type CalcRow = {
 }
 
 export type InputModifier = {
-    text: string,
+    html: string,
     separator?: string,
     callback?: () => void
 }
@@ -44,6 +44,13 @@ export type InputOption = {
 export type InputToggle = {
     text: string,
     checked: boolean,
+    callback: () => void
+}
+
+export type InputTrigger = {
+    html: string,
+    title?: string,
+    separator?: string,
     callback: () => void
 }
 

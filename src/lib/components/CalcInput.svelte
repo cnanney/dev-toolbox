@@ -1,7 +1,7 @@
 <script lang="ts">
     import CalcInputTypeSelector from '$lib/components/CalcInputTypeSelector.svelte'
     import ClearButton from '$lib/components/ClearButton.svelte'
-    import type { InputModifier, InputOption, InputToggle, TNullish } from '$lib/types'
+    import type { InputModifier, InputOption, InputToggle, InputTrigger, TNullish } from '$lib/types'
     import { focusInput } from '$lib/util'
     import { onMount } from 'svelte'
     import type { Writable } from 'svelte/store'
@@ -12,7 +12,8 @@
         inputSize: number = 2,
         inputOptions: InputOption[] | TNullish = null,
         inputModifiers: InputModifier[] | TNullish = null,
-        inputToggles: InputToggle[] | TNullish = null
+        inputToggles: InputToggle[] | TNullish = null,
+        inputTriggers: InputTrigger[] | TNullish = null
 
     onMount(() => {
         setTimeout(focusInput, 10)
@@ -22,13 +23,19 @@
 <div class="wdt-input">
     <div class="px-4 py-3">
         <div class="flex justify-between items-center">
-
-            <div class="flex">
+            <div class="flex items-center">
                 <label for="wdtInput"
-                       class="block text-sm font-semibold text-gray-700 dark:text-gray-200"
+                       class="text-sm font-semibold text-gray-700 dark:text-gray-200"
                 >{inputLabel}</label>
                 {#if inputTypeStore && inputOptions}
                     <CalcInputTypeSelector {inputTypeStore} {inputOptions}/>
+                {/if}
+                {#if inputTriggers}
+                    <div class="ml-1 flex space-x-1 text-sm text-blue-800 dark:text-blue-400">
+                        {#each inputTriggers as trigger}
+                                <button on:click={trigger.callback} title={trigger.title ?? ''}>{@html trigger.html}</button>{trigger.separator ?? ''}
+                        {/each}
+                    </div>
                 {/if}
             </div>
             <div class="flex divide-x space-x-2">
@@ -37,9 +44,9 @@
                         {#each inputModifiers as mod}
                             {#if mod.callback}
                                 <button class="hover:underline" on:click={mod.callback}
-                                >{mod.text}</button>{mod.separator ?? ''}
+                                >{@html mod.html}</button>{mod.separator ?? ''}
                             {:else}
-                                <span class="text-gray-500 dark:text-gray-300">{mod.text}</span>
+                                <span class="text-gray-500 dark:text-gray-300">{@html mod.html}</span>
                             {/if}
                         {/each}
                     </div>
