@@ -51,16 +51,17 @@ export function compileSearchTokens(searchInput: string) {
         .toLowerCase()
         // Capture parenthesis groups, split on `spaces` (AND), and `|` (OR)
         .split(/([!^=]*?".+"[$]?)|\s+|\|/g)
+        // Remove non-control chars
+        .map(s => s ? s.replace(RE_REMOVE, '') : '')
+        // Clean
         .filter(s => {
             // Remove blank and undefined
             if (!s) return false
             // Remove negated text, but keep single char
             if (RE_NEGATION.test(s)) return s.length === 1
-            
+
             return true
         })
-        // Clean
-        .map(s => s ? s.replace(RE_REMOVE, '') : '')
 }
 
 export function findTokenMatches(input: string, tokens: string[]) {
@@ -68,7 +69,7 @@ export function findTokenMatches(input: string, tokens: string[]) {
 
     tokens.forEach(token => {
         const tokenRE = new RegExp(token, 'g')
-        while (match = tokenRE.exec(input)) {
+        while (token.length && (match = tokenRE.exec(input))) {
             indices.push([match.index, tokenRE.lastIndex - 1])
         }
     })
