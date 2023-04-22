@@ -57,7 +57,7 @@ select.unloaded {
     @apply w-3.5 h-3.5 shadow-sm focus:ring focus:ring-offset-0
     border-gray-300 dark:border-gray-700
     dark:checked:border-gray-700
-    dark:bg-gray-600 dark:checked:bg-blue-600
+    dark:bg-gray-500 dark:checked:bg-blue-600
     focus:border-blue-600 focus:ring-blue-400
     focus:ring-opacity-40 dark:focus:ring-opacity-20;
 }

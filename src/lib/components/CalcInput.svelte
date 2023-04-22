@@ -31,7 +31,7 @@
                     <CalcInputTypeSelector {inputTypeStore} {inputOptions}/>
                 {/if}
                 {#if inputTriggers}
-                    <div class="ml-1 flex space-x-1 text-sm text-blue-800 dark:text-blue-400">
+                    <div class="ml-1 flex space-x-1 text-sm text-gray-700 dark:text-gray-200">
                         {#each inputTriggers as trigger}
                                 <button on:click={trigger.callback} title={trigger.title ?? ''}>{@html trigger.html}</button>{trigger.separator ?? ''}
                         {/each}
@@ -56,7 +56,7 @@
                         <label class="inline-flex items-center text-xs">
                             <input type="checkbox" class="gh-checkbox" bind:checked={tog.checked}
                                    on:change={tog.callback}>
-                            <span class="ml-2 text-gray-700 dark:text-gray-300">{tog.text}</span>
+                            <span class="ml-2 text-gray-700 dark:text-gray-200">{tog.text}</span>
                         </label>
                     {/each}
                 {/if}

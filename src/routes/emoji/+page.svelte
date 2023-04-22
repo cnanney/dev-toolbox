@@ -150,7 +150,7 @@
                 <HelpText title="Extended search options" position="top" on:close={toggleSearchHelp}>
                     <p class="text-vs">White space acts as an AND operator, while a single <InlineCode>|</InlineCode>
                         character acts as an OR operator. Use double quotes to escape white space,
-                        e.g.<InlineCode>"red hair"</InlineCode>.
+                        e.g. <InlineCode>"red hair"</InlineCode>.
                     </p>
                     <table>
                         <thead>
