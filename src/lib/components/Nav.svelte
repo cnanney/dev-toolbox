@@ -3,9 +3,9 @@
     import { getSyncedStore } from '$lib/stores'
     import { createPopoutWindow } from '$lib/util'
     import { urlTo } from '$lib/util.js'
-    import External from './icons/External.svelte';
-    import Moon from './icons/Moon.svelte';
-    import Sun from './icons/Sun.svelte';
+    import External from './icons/External.svelte'
+    import Moon from './icons/Moon.svelte'
+    import Sun from './icons/Sun.svelte'
 
     const darkModeEnabled = getSyncedStore('darkModeEnabled', false)
 

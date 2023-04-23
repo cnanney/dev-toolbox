@@ -46,7 +46,7 @@
          aria-describedby="modalDescription"
     >
         <div class="absolute top-0 right-0">
-            <CloseButton on:close />
+            <CloseButton on:close/>
         </div>
 
         <div class="p-4 pb-6 flex flex-col text-center justify-between h-full">

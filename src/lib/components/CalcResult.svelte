@@ -55,7 +55,7 @@
                     class="h-3 w-3 cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
                     title="Send to input"
                 >
-                    <DoubleChevronUp />
+                    <DoubleChevronUp/>
                 </a>
             {/if}
             <a
@@ -64,7 +64,7 @@
                 class="h-3 w-3 ml-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
                 title="Copy to clipboard"
             >
-                <Clipboard />
+                <Clipboard/>
             </a>
         </div>
     </div>
