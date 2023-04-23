@@ -11,6 +11,9 @@ describe('emoji util test', () => {
         expect(compileSearchTokens('=the')).toMatchObject(['the'])
         expect(compileSearchTokens('!^the')).toMatchObject([])
         expect(compileSearchTokens('^"!the "')).toMatchObject(['^!the '])
+        expect(compileSearchTokens('\'"red hair"')).toMatchObject(['red hair'])
+        expect(compileSearchTokens('="red hair"')).toMatchObject(['red hair'])
+        expect(compileSearchTokens('!"red hair"')).toMatchObject([])
     })
 
     it('finds search token matches', () => {
@@ -29,7 +32,6 @@ describe('emoji util test', () => {
         // Dupes are expected here, filtered out elsewhere
         expect(findTokenMatches(s, compileSearchTokens('^th th'))).toMatchObject([[0, 1], [0, 1]])
         expect(findTokenMatches('ON! arrow', compileSearchTokens('!'))).toMatchObject([[2,2]])
-        expect(findTokenMatches('ON! arrow', compileSearchTokens('"! a"'))).toMatchObject([[2,4]])
         expect(findTokenMatches('ON! arrow', compileSearchTokens('"! a"'))).toMatchObject([[2,4]])
     })
 

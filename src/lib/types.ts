@@ -7,12 +7,17 @@ export type TNullish = null | undefined;
 export type RangeTuple = [number, number]
 export type RangeIndices = RangeTuple[]
 
+export type FullNetmask = Netmask & {
+    maskLong: number;
+    netLong: number;
+}
+
 export type HashInput = string
 export type EncodeInput = string
 export type DecodeInput = string
 export type NumberInput = string
 export type TimeInput = DateTime | TNullish
-export type NetInput = Netmask | TNullish
+export type NetInput = FullNetmask | TNullish
 
 export type PreCalcCallbackWithType = (input: string, type: string) => any
 export type PreCalcCallbackNoType = (input: string) => any

@@ -51,9 +51,7 @@ export function compileSearchTokens(searchInput: string) {
         .toLowerCase()
         // Capture parenthesis groups, split on `spaces` (AND), and `|` (OR)
         .split(/([!^=]*?".+"[$]?)|\s+|\|/g)
-        // Remove non-control chars
-        .map(s => s ? s.replace(RE_REMOVE, '') : '')
-        // Clean
+        // Clean (must be first)
         .filter(s => {
             // Remove blank and undefined
             if (!s) return false
@@ -62,14 +60,20 @@ export function compileSearchTokens(searchInput: string) {
 
             return true
         })
+        // Remove unneeded chars
+        .map(s => s ? s.replace(RE_REMOVE, '') : '')
+        // Check for blank again
+        .filter(s => s.length)
 }
 
 export function findTokenMatches(input: string, tokens: string[]) {
     let indices: RangeIndices = [], match
 
     tokens.forEach(token => {
+        if (!token) return
+
         const tokenRE = new RegExp(token, 'g')
-        while (token.length && (match = tokenRE.exec(input))) {
+        while (match = tokenRE.exec(input)) {
             indices.push([match.index, tokenRE.lastIndex - 1])
         }
     })
