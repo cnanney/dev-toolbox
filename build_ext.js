@@ -34,7 +34,7 @@ async function removeInlineScripts(directory) {
             console.log(`  File: ${file}`)
             const f = readFileSync(file)
             const $ = load(f.toString())
-            const node = $('script[type="module"]').get()[0]
+            const node = $('script').get()[0]
 
             if (!node) return
             if (Object.keys(node.attribs).includes('src')) return // if there is a src, it's not an inline script
@@ -44,7 +44,7 @@ async function removeInlineScripts(directory) {
                 ''
             )
             const innerScript = node.children[0].data
-            const fullTag = $('script[type="module"]').toString()
+            const fullTag = $('script').toString()
             //get new filename
             const fn = `/script-${hash(innerScript)}.js`
             //remove from orig html file and replace with new script tag
@@ -115,7 +115,7 @@ async function build(browserName) {
 
     await removeManifestFiles(`./out/${browserName}`)
 
-    command(`cp ./ext/${browserName}_manifest.json ./out/${browserName}/manifest.json`)
+    command(`cp ./ext/manifest_${browserName}.json ./out/${browserName}/manifest.json`)
     command(`cp -R ./ext/img ./out/${browserName}`)
 
     console.log(`Building ZIP for "${browserName}".`)
