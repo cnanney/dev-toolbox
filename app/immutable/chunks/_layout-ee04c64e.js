@@ -1,1 +1,0 @@
-import{s as e}from"./storage-289e1875.js";const t=!0,r=async()=>(await e.init(),{}),a=Object.freeze(Object.defineProperty({__proto__:null,load:r,prerender:t},Symbol.toStringTag,{value:"Module"}));export{a as _,r as l,t as p};

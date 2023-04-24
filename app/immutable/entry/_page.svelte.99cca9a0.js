@@ -1,0 +1,1 @@
+import{S as o,i as e,s as a,o as r}from"../chunks/index.a6e5a0ea.js";import{g as n}from"../chunks/navigation.e7c3774e.js";import{u,s as i}from"../chunks/storage.daa01189.js";function l(s){return r(()=>{n(u(i.get("lastRoute")??"/hash"))}),[]}class p extends o{constructor(t){super(),e(this,t,l,null,a,{})}}export{p as default};
