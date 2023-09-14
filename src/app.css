@@ -3,28 +3,28 @@
 @tailwind utilities;
 
 select {
-    background-position: right 0.1rem center;
+  background-position: right 0.1rem center;
 }
 
 .dark select {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='rgba(156, 163, 175)' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='rgba(156, 163, 175)' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
 }
 
 select.unloaded {
-    background-image: none;
+  background-image: none;
 }
 
 .wdt {
-    width: 650px;
+  width: 650px;
 }
 
 .wdt-output {
-    @apply relative scrollbar scrollbar-thin scrollbar-thumb-gray-300
+  @apply relative scrollbar scrollbar-thin scrollbar-thumb-gray-300
     bg-white dark:bg-gray-700 overflow-y-auto;
 }
 
 .wdt-input textarea {
-    @apply block w-full resize-none font-mono text-xs shadow-sm
+  @apply block w-full resize-none font-mono text-xs shadow-sm
     border-gray-300 focus:ring-gray-500 focus:border-gray-500
     focus:ring-opacity-70 focus:border-opacity-70
     dark:border-gray-500 dark:bg-gray-700 dark:text-gray-200
@@ -35,26 +35,26 @@ select.unloaded {
 }
 
 .wdt-output textarea {
-    @apply block w-full text-xxs font-mono mt-1 border-0 resize-none break-all shadow-sm
+  @apply block w-full text-xxs font-mono mt-1 border-0 resize-none break-all shadow-sm
     bg-gray-50 dark:bg-gray-600 dark:text-gray-200 focus:ring-0 focus:border-black
     scrollbar scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-500
     overflow-x-hidden;
-    line-height: 1rem;
-    padding: .5rem .7rem .4rem;
+  line-height: 1rem;
+  padding: 0.5rem 0.7rem 0.4rem;
 }
 
 /* EMOJI */
 
 #emojis {
-    height: 390px;
+  height: 390px;
 }
 
 .e-byte.control {
-    @apply border-b border-gray-300 dark:border-gray-500 border-dashed cursor-help
+  @apply border-b border-gray-300 dark:border-gray-500 border-dashed cursor-help;
 }
 
 .gh-checkbox {
-    @apply w-3.5 h-3.5 shadow-sm focus:ring focus:ring-offset-0
+  @apply w-3.5 h-3.5 shadow-sm focus:ring focus:ring-offset-0
     border-gray-300 dark:border-gray-700
     dark:checked:border-gray-700
     dark:bg-gray-500 dark:checked:bg-blue-600
@@ -63,36 +63,36 @@ select.unloaded {
 }
 
 .gh {
-    @apply absolute bottom-1 right-1 w-3 h-3 text-gray-300 dark:text-gray-500;
-    background-size: cover;
-    background-repeat: no-repeat;
+  @apply absolute bottom-1 right-1 w-3 h-3 text-gray-300 dark:text-gray-500;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .e-c {
-    @apply p-3 relative overflow-hidden flex items-center
+  @apply p-3 relative overflow-hidden flex items-center
     border border-gray-100 dark:border-gray-600;
 }
 
 .e-c-i {
-    @apply w-10 h-10 flex-shrink-0;
+  @apply w-10 h-10 flex-shrink-0;
 }
 
 .e-c-i img {
-    object-fit: contain;
+  object-fit: contain;
 }
 
 .e-c-n {
-    @apply text-xs leading-tight ml-3 text-gray-800 dark:text-gray-300;
+  @apply text-xs leading-tight ml-3 text-gray-800 dark:text-gray-300;
 }
 
 .e-c-n span {
-    @apply underline underline-offset-2;
+  @apply underline underline-offset-2;
 }
 
 .e-f.shadow-inner {
-    --tw-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --tw-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .dark .e-f.shadow-inner {
-    --tw-shadow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.05);
+  --tw-shadow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.05);
 }

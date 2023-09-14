@@ -9,9 +9,9 @@ export const prerender = true
 // export const trailingSlash = 'always'
 
 export const load: TObject = (async () => {
-    if (browser) {
-        await storageService.init()
-    }
+  if (browser) {
+    await storageService.init()
+  }
 
-    return {}
+  return {}
 }) satisfies LayoutData
