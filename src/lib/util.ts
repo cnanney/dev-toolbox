@@ -1,5 +1,5 @@
 import { base } from '$app/paths'
-import type { RangeIndices, TObject } from '$lib/types'
+import type { RangeIndices, RangeTuple, TObject } from '$lib/types'
 
 export const isBrowser: boolean =
   typeof window !== 'undefined' && typeof document !== 'undefined'
@@ -114,27 +114,24 @@ export const dotGet = (
 }
 
 // Credit: Alex Irabor, https://onecompiler.com/javascript/3xbjgxv4r
-export function mergeOverlappingRanges(array: RangeIndices) {
-  if (!array.length) return array
+export function mergeOverlappingRanges(ranges: RangeIndices): RangeIndices {
+  if (!ranges.length) return ranges
 
-  const sortedIntervals = array.sort((a, b) => a[0] - b[0])
-  const mergedIntervals = []
-  let currentInterval = sortedIntervals[0]
+  const sortedRanges = ranges.sort((a, b) => a[0] - b[0])
+  const mergedRanges: RangeIndices = []
+  let currentRange: RangeTuple = sortedRanges[0]
+  mergedRanges.push(currentRange)
 
-  mergedIntervals.push(currentInterval)
+  for (const nextRange of sortedRanges) {
+    const currentRangeEnd = currentRange[1]
+    const [nextRangeStart, nextRangeEnd] = nextRange
 
-  for (const nextInterval of sortedIntervals) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, currentIntervalEnd] = currentInterval
-    const [nextIntervalStart, nextIntervalEnd] = nextInterval
-
-    if (currentIntervalEnd >= nextIntervalStart) {
-      currentInterval[1] = Math.max(currentIntervalEnd, nextIntervalEnd)
+    if (currentRangeEnd >= nextRangeStart) {
+      currentRange[1] = Math.max(currentRangeEnd, nextRangeEnd)
     } else {
-      currentInterval = nextInterval
-      mergedIntervals.push(currentInterval)
+      currentRange = nextRange
+      mergedRanges.push(currentRange)
     }
   }
-
-  return mergedIntervals
+  return mergedRanges
 }
