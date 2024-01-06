@@ -67,6 +67,14 @@
         >
           {emoji.n}
         </p>
+        {#if emoji.kw.length}
+          <p
+            class="mt-2 italic text-center text-xs text-gray-500 dark:text-gray-400"
+          >
+            {emoji.kw.join(', ')}
+          </p>
+        {/if}
+        <p></p>
         <p
           class="mt-2 text-center uppercase text-xs font-light text-gray-500 dark:text-gray-400"
         >

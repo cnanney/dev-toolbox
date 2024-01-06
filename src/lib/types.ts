@@ -65,6 +65,7 @@ export type Emoji = {
   g: number // group
   sg: number // sub group
   gh: string[] // github aliases
+  kw: string[] // keywords
   fi?: ReadonlyArray<RangeTuple> // fuse search result indices to highlight
 }
 

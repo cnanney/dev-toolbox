@@ -34,7 +34,7 @@
   const chunkSize = 50
   const loadOffsetPx = 500 //px
   const fuseOptions = {
-    keys: ['n'],
+    keys: ['n', 'kw'],
     shouldSort: false,
     threshold: 0.0,
     ignoreLocation: true,
