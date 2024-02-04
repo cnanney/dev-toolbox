@@ -86,7 +86,7 @@ select.unloaded {
 }
 
 .e-c-n span {
-  @apply underline underline-offset-2;
+  @apply underline underline-offset-2 decoration-gray-400;
 }
 
 .e-f.shadow-inner {
