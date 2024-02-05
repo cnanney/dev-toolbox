@@ -67,6 +67,8 @@ export type Emoji = {
   gh: string[] // github aliases
   kw: string[] // keywords
   fi?: ReadonlyArray<RangeTuple> // fuse search result indices to highlight
+  // Fuse indices are included in the Emoji object, but its default
+  // fuzzy search is search too verbose for highlighting, so we make our own.
 }
 
 export type TimeTypeFromFormats =

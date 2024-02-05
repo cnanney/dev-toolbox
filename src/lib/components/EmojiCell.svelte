@@ -1,55 +1,22 @@
 <script lang="ts">
   import type { Emoji } from '$lib/types'
-  import { mergeOverlappingRanges } from '$lib/util'
-  import { emojiGhCodes, emojiPngPath, findTokenMatches } from '$lib/util/emoji'
+  import { emojiGhCodes, emojiPngPath, wrapTokenRanges } from '$lib/util/emoji'
   import { createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher()
 
   export let emoji: Emoji, searchTokens: string[]
-
-  function highlightedName(tokens: string[] = []) {
-    let name = emoji.n.toLowerCase(),
-      // Fuse indices are included in the Emoji object, but its default
-      // fuzzy search is search too verbose for highlighting, so we'll
-      // make our own ;)
-      //
-      // indices = emoji.fi ?? [],
-      indices = findTokenMatches(name, tokens),
-      merged = mergeOverlappingRanges(indices),
-      nextStartIndex = 0,
-      out = []
-
-    for (let range of merged) {
-      const endIndex = range[1] + 1
-      out.push(
-        ...[
-          name.substring(nextStartIndex, range[0]),
-          '<span>',
-          name.substring(range[0], endIndex),
-          '</span>',
-        ]
-      )
-      nextStartIndex = endIndex
-    }
-
-    out.push(name.substring(nextStartIndex))
-
-    return out.join('')
-  }
-
-  $: displayName = highlightedName(searchTokens)
 </script>
 
 <div class="e-c">
   <button
     class="e-c-i"
     title="Show Details"
-    on:click={() => dispatch('showEmoji', { emoji })}
+    on:click={() => dispatch('showEmoji', { emoji, searchTokens })}
   >
     <img src={emojiPngPath(emoji)} alt={emoji.n} />
   </button>
-  <div class="e-c-n">{@html displayName}</div>
+  <div class="e-c-n">{@html wrapTokenRanges(emoji.n, searchTokens)}</div>
   {#if emoji.gh.length}
     <span class="gh" title={emojiGhCodes(emoji)}>
       <svg

@@ -24,7 +24,7 @@
     chunkIndex: number = 0,
     fuse: Fuse<Emoji>,
     modalVisible: boolean = false,
-    modalEmoji: Emoji,
+    emoji: Emoji,
     versionHelpVisible: boolean = false,
     searchHelpVisible: boolean = false
 
@@ -70,7 +70,7 @@
   }
 
   function openModal(e: CustomEvent) {
-    modalEmoji = e.detail.emoji
+    emoji = e.detail.emoji
     modalVisible = true
   }
 
@@ -251,7 +251,7 @@
     </div>
   </div>
   {#if modalVisible}
-    <EmojiModal emoji={modalEmoji} on:close={closeModal} />
+    <EmojiModal {...{ emoji, searchTokens }} on:close={closeModal} />
   {/if}
 </div>
 

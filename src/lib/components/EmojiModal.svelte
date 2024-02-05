@@ -9,10 +9,11 @@
     emojiGhCodes,
     emojiHtmlChars,
     emojiPngPath,
+    wrapTokenRanges,
   } from '$lib/util/emoji'
   import { fade } from 'svelte/transition'
 
-  export let emoji: Emoji
+  export let emoji: Emoji, searchTokens: string[]
 
   $: categoryName = categories.groups[emoji.g]
   $: subCategoryName = categories.subgroups[emoji.sg]
@@ -62,13 +63,13 @@
           class="text-center text-2xl dark:text-gray-200 px-4"
           id="modalDescription"
         >
-          {emoji.n}
+          {@html wrapTokenRanges(emoji.n, searchTokens)}
         </p>
         {#if emoji.kw.length}
           <p
             class="mt-2 italic text-center text-xs text-gray-500 dark:text-gray-400"
           >
-            {emoji.kw.join(', ')}
+            {@html wrapTokenRanges(emoji.kw.join(', '), searchTokens)}
           </p>
         {/if}
         <p></p>

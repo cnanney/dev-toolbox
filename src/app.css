@@ -85,7 +85,7 @@ select.unloaded {
   @apply text-xs leading-tight ml-3 text-gray-800 dark:text-gray-300;
 }
 
-.e-c-n span {
+span.hl {
   @apply underline underline-offset-2 decoration-gray-400;
 }
 

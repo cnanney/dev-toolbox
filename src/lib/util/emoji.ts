@@ -1,5 +1,5 @@
 import type { Emoji, RangeIndices } from '$lib/types'
-import { urlTo } from '$lib/util'
+import { mergeOverlappingRanges, urlTo } from '$lib/util'
 
 export const emojiPngFileName = function (emoji: Emoji) {
   const codes = emoji.qc ?? []
@@ -89,4 +89,28 @@ export function findTokenMatches(input: string, tokens: string[]) {
   })
 
   return indices
+}
+
+export function wrapTokenRanges(input: string, searchTokens: string[] = []) {
+  let indices = findTokenMatches(input, searchTokens),
+    merged = mergeOverlappingRanges(indices),
+    nextStartIndex = 0,
+    out = []
+
+  for (let range of merged) {
+    const endIndex = range[1] + 1
+    out.push(
+      ...[
+        input.substring(nextStartIndex, range[0]),
+        '<span class="hl">',
+        input.substring(range[0], endIndex),
+        '</span>',
+      ]
+    )
+    nextStartIndex = endIndex
+  }
+
+  out.push(input.substring(nextStartIndex))
+
+  return out.join('')
 }
